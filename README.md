@@ -122,15 +122,6 @@ flowchart TD
 
 ---
 
-## Harmonogram i deliverables
+## Produkt
 
-**Faza 1 - działający prototyp detektora** *(pierwsza połowa semestru)*
-- Detektor oceniony w trzech realistycznych scenariuszach danych bankowych
-- Szkielet adaptera PyGOD ↔ pyCLAD
-
-**Faza 2 - adaptacyjny system radzący sobie z driftem** *(druga połowa)*
-- Scenariusze continual oparte na czasie i koncepcjach
-- Badanie empiryczne: czy detektor nadal działa, gdy fraudy ewoluują?
-
-**Finalne deliverables**
 Działający detektor fraudów oparty na grafie · Adapter PyGOD ↔ pyCLAD · Scenariusze continual na publicznych danych bankowych/e-commerce · Dowód, że adaptuje się do driftu.
