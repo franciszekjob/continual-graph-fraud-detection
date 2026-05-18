@@ -134,5 +134,3 @@ flowchart TD
 
 **Finalne deliverables**
 Działający detektor fraudów oparty na grafie · Adapter PyGOD ↔ pyCLAD · Scenariusze continual na publicznych danych bankowych/e-commerce · Dowód, że adaptuje się do driftu.
-
-### Dziękujemy - pytania?
