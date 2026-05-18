@@ -26,9 +26,10 @@ AGH · semestr 8
 ## Mechanizmy AI
 
 **Stosowane w detektorze**
-- **Detektory anomalii oparte na sieciach grafowych** (Graph Neural Networks z PyGOD: DOMINANT, AnomalyDAE, CoLA, GAAN, …) - oceniają każdą transakcję w kontekście jej sąsiedztwa (powiązane konta, urządzenia, sklepy).
-- **Klasyczne baseline jednoklasowe** (LOF, Isolation Forest, OCSVM z PyOD) - kontrola sanity, że sygnał z grafu faktycznie daje wartość.
-- **Strategie continual learning** z pyCLAD (replay, regularyzacja, naive sequential) - utrzymują detektor sprawnym, gdy fraud ewoluuje.
+<!-- - **Detektory anomalii oparte na sieciach grafowych** (Graph Neural Networks z PyGOD: DOMINANT, AnomalyDAE, CoLA, GAAN, …) - oceniają każdą transakcję w kontekście jej sąsiedztwa (powiązane konta, urządzenia, sklepy). -->
+- **Detektory anomalii oparte na sieciach grafowych** (Graph Neural Networks z PyGOD): oceniają każdą transakcję w kontekście jej sąsiedztwa (powiązane konta, urządzenia, sklepy).
+- **Klasyczne baseline jednoklasowe** (np. Isolation Forest z PyOD) - kontrola sanity, że sygnał z grafu faktycznie daje wartość.
+- **Strategie continual learning** z pyCLAD - utrzymują detektor sprawnym, gdy fraud ewoluuje.
 
 **Nieużywane - i dlaczego**
 - *Systemy regułowe / reprezentacja wiedzy* - schematy fraudu mutują zbyt szybko; ręcznie pisane reguły dezaktualizują się w ciągu miesięcy i nie wychwytują ukrytych wzorców relacyjnych.
@@ -66,8 +67,8 @@ flowchart TD
     A["Preprocessing i budowa grafu<br/>(wspólne karty / urządzenia / IP / sklepy)"]
     C["Generator scenariuszy continual<br/>drift czasowy · drift klastrowy"]
     D["Adapter PyGOD ↔ pyCLAD<br/>fit / predict / score · 3 reżimy nadzoru"]
-    E["Modele GNN z PyGOD<br/>DOMINANT · AnomalyDAE · CoLA"]
-    F["Klasyczne baseline (PyOD)<br/>LOF · Isolation Forest · OCSVM"]
+    E["Modele GNN z PyGOD"]
+    F["Klasyczne baseline (PyOD)<br/>np. Isolation Forest"]
     G["Oflagowane transakcje<br/>→ kolejka śledcza"]
     H["Ewaluacja continual<br/>ROC-AUC · BWT · FWT · Forgetting"]
 
@@ -90,7 +91,7 @@ flowchart TD
     class H eval;
 ```
 
-**Adapter PyGOD ↔ pyCLAD** to nasz kluczowy wkład techniczny - jedno API `fit / predict / score` re-używane w eksperymentach statycznych *i* continual.
+<!-- **Adapter PyGOD ↔ pyCLAD** to nasz kluczowy wkład techniczny - jedno API `fit / predict / score` re-używane w eksperymentach statycznych *i* continual. -->
 
 ---
 
