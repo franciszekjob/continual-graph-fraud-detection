@@ -44,13 +44,13 @@ AGH · semestr 8
 - *Cechy tabelaryczne transakcji:* kwota, czas, waluta, urządzenie, IP, sklep, karta, konto, geo, … (z wysoko ocenianych pipeline'ów preprocessingowych z Kaggle).
 - *Krawędzie grafu:* wspólna karta / urządzenie / IP / konto / sklep - ta sama encja dotykająca wielu transakcji.
 
-**Trzy reżimy nadzoru = trzy realistyczne scenariusze wdrożeniowe**
+<!-- **Trzy reżimy nadzoru = trzy realistyczne scenariusze wdrożeniowe**
 
 | Rzeczywistość banku | Dostępne etykiety | Nasz reżim |
 |---|---|---|
 | Tylko potwierdzona historia "czystych" (bez chargebacków) | Brak dla fraudów | *Semi-supervised / jednoklasowe* |
 | Backlog zespołu śledczego | 1 % → 5 % → 10 % → 20 % | *Few-shot* |
-| Pełna historia z etykietami (rzadkie, drogie) | Wszystkie | *W pełni nadzorowane* |
+| Pełna historia z etykietami (rzadkie, drogie) | Wszystkie | *W pełni nadzorowane* | -->
 
 **Główny dataset - IEEE-CIS Fraud Detection** (Kaggle).
 Dlaczego ten: ~590k transakcji; jawne kolumny encji (`card1–6`, `DeviceInfo`, `addr1/2`, `id_30–34`, domena email) tworzą naturalne krawędzie grafu; timestampy transakcji wspierają drift czasowy; duża pula publicznych pipeline'ów preprocessingowych z Kaggle do ponownego użycia.
@@ -113,9 +113,6 @@ flowchart TD
 - PyGOD
 - pyCLAD
 
-## Dataset
-
-IEEE-CIS Fraud Detection
 
 <!-- | Warstwa | Biblioteka |
 |-------|---------|
