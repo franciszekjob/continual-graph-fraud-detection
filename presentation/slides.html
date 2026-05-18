@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wykrywanie Fraudów — Prezentacja</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.css">
+  <style>
+    .reveal h1 { font-size: 1.6em; color: #1f3a5f; }
+    .reveal h2 { font-size: 1.15em; color: #1f3a5f; border-bottom: 2px solid #cc7700; padding-bottom: 6px; margin-bottom: 0.6em; }
+    .reveal ul { font-size: 0.82em; line-height: 1.75; }
+    .reveal li { margin-bottom: 4px; }
+    .reveal p  { font-size: 0.82em; }
+    .reveal strong { color: #cc7700; }
+    .reveal code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; font-size: 0.85em; }
+    .small { font-size: 0.65em; color: #666; }
+    table { font-size: 0.78em; width: 100%; border-collapse: collapse; }
+    td, th { padding: 7px 12px; border: 1px solid #ddd; text-align: left; }
+    th { background: #1f3a5f; color: white; }
+    tr:nth-child(even) { background: #f5f5f5; }
+    .arrow { color: #cc7700; font-weight: bold; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- Slajd 1 -->
+<section>
+  <h1>Wykrywanie Fraudów</h1>
+  <p style="font-size:0.9em; color:#444;">Adaptacyjny system wykrywania fraudów w transakcjach bankowych</p>
+  <p class="small" style="margin-top:1.5em;">
+    Franciszek Job · Jakub Ciszewski<br>
+    AGH · Semestr 8 · 2026-05-17
+  </p>
+</section>
+
+<!-- Slajd 2 -->
+<section>
+  <h2>Wprowadzenie</h2>
+  <ul>
+    <li>Fraud w transakcjach bankowych to <strong>powszechny i kosztowny problem</strong> — dotyka banków, systemów płatności i platform e-commerce</li>
+    <li>Fraudsterzy działają w sposób <strong>zorganizowany i ewoluujący</strong> — na jeden fraud składa się często siatka wielu powiązanych transakcji</li>
+    <li>Celem projektu jest stworzenie <strong>adaptacyjnego systemu wykrywania fraudów</strong>, który radzi sobie zarówno z relacyjną strukturą danych, jak i ze zmiennością wzorców w czasie</li>
+  </ul>
+</section>
+
+<!-- Slajd 3 -->
+<section>
+  <h2>Problemy obecnych rozwiązań</h2>
+  <ul>
+    <li>
+      <strong>Modele się degradują</strong> — modele wytrenowane na danych są użyteczne przez krótki czas, ponieważ scamerzy wymyślają nowe metody
+    </li>
+    <li>
+      <strong>Klasyczne detektory nie uwzględniają relacji między danymi</strong> — skupiają się tylko na jednej transakcji, podczas gdy na jeden fraud składa się często siatka wielu transakcji
+    </li>
+  </ul>
+</section>
+
+<!-- Slajd 3 -->
+<section>
+  <h2>Nasze rozwiązanie</h2>
+  <ul>
+    <li>
+      Wykorzystujemy <strong>graf reprezentujący transakcje</strong>, w którym wierzchołkami są transakcje, a krawędź to wspólna encja między dwoma transakcjami — np. wspólna karta kredytowa, wspólny adres IP itp.
+    </li>
+    <li>
+      System pracuje w trybie <strong>continual learning</strong> — doucza się nowych wzorców na bieżąco
+    </li>
+  </ul>
+</section>
+
+<!-- Slajd 4 -->
+<section>
+  <h2>Problemy naszego rozwiązania</h2>
+  <ul>
+    <li>
+      <strong>Rozmiar grafu</strong> — zbiory danych dla transakcji bankowych są bardzo obszerne, co podczas podejścia grafowego może być bardzo kosztowne pamięciowo. Możemy otrzymać mega-graf, który nie zmieści się w pamięci RAM
+    </li>
+    <li>
+      <strong>Catastrophic forgetting</strong> — model ucząc się nowych wzorców może zapominać o poprzednich, przez próbę dopasowania strategii do nowych danych
+    </li>
+  </ul>
+</section>
+
+<!-- Slajd 5 -->
+<section>
+  <h2>Rozwiązania, które będziemy testować</h2>
+  <ul>
+    <li><strong>Optymalne wybranie encji</strong> tworzących krawędzie — ograniczenie rozmiaru grafu</li>
+    <li><strong>Replay</strong> — podczas uczenia modelu na nowych danych dorzucamy do nich stare wzorce</li>
+    <li><strong>EWC</strong> (Elastic Weight Consolidation) — karanie modelu za zmienianie wag istotnych dla poprzednich przykładów</li>
+  </ul>
+</section>
+
+<!-- Slajd 6 -->
+<section>
+  <h2>Architektura systemu</h2>
+  <pre class="mermaid" style="font-size:0.7em;">
+flowchart LR
+    A[Data ingestion] --> B[Preprocessing\npodział na okresy]
+    B --> C[Graf\nNetworkX]
+    C --> D[Model\nPyGOD]
+    D --> E[Wrapper\npyCLAD]
+    E --> F[Ewaluacja\nwyników]
+
+    style D fill:#ffe4b5,stroke:#cc7700
+    style E fill:#ffe4b5,stroke:#cc7700
+  </pre>
+</section>
+
+<!-- Slajd 7 -->
+<section>
+  <h2>Zbiór danych i biblioteki</h2>
+  <p><strong>Zbiór danych:</strong> IEEE-CIS Fraud Detection — duży zbiór danych, etykietowany, z podziałem czasowym</p>
+  <p><strong>Biblioteki:</strong></p>
+  <ul>
+    <li><code>numpy</code>, <code>pandas</code></li>
+    <li><code>networkx</code> — budowa grafu</li>
+    <li><code>pygod</code> — modele grafowe do wykrywania anomalii</li>
+    <li><code>pyclad</code> — framework do ciągłego uczenia anomalii</li>
+  </ul>
+</section>
+
+<!-- Slajd 8 -->
+<section>
+  <h2>Metryki ewaluacji</h2>
+  <p><strong>Czy detektor wykrywa fraudy?</strong></p>
+  <ul>
+    <li><strong>ROC-AUC</strong></li>
+  </ul>
+  <br>
+  <p><strong>Czy system uczy się w czasie?</strong></p>
+  <ul>
+    <li><strong>Forgetting</strong> — czy model zapomina poprzednie wzorce?</li>
+    <li><strong>Backward Transfer</strong> — czy nauka nowych rzeczy pomaga czy szkodzi starym?</li>
+    <li><strong>Forward Transfer</strong> — czy nauczone stare rzeczy pomagają w nauce nowych?</li>
+  </ul>
+</section>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+
+  Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'slide', center: true });
+  Reveal.on('ready', () => mermaid.run());
+</script>
+</body>
+</html>
