@@ -64,7 +64,7 @@ Dlaczego ten: ~590k transakcji; jawne kolumny encji (`card1–6`, `DeviceInfo`, 
 ```mermaid
 flowchart TD
     S["Strumień transakcji<br/>(bank · processor · e-commerce)"]
-    A["Preprocessing i budowa grafu<br/>(wspólne karty / urządzenia / IP / sklepy)"]
+    A["Preprocessing i budowa grafu"]
     D["Adapter PyGOD ↔ pyCLAD"]
     E["Modele GNN z PyGOD"]
     F["Klasyczne baseline (PyOD)<br/>np. Isolation Forest"]
