@@ -110,7 +110,14 @@ flowchart TD
 
 ## Biblioteki i tech stack
 
-| Warstwa | Biblioteka |
+- PyGOD
+- pyCLAD
+
+## Dataset
+
+IEEE-CIS Fraud Detection
+
+<!-- | Warstwa | Biblioteka |
 |-------|---------|
 | Modele anomalii grafowych | **PyGOD** |
 | Backend grafowy | **PyTorch Geometric**, PyTorch |
@@ -118,7 +125,7 @@ flowchart TD
 | Klasyczne baseline | **PyOD**, scikit-learn |
 | Dane / cechy | pandas, numpy, publiczne notebooki Kaggle |
 | Dataset | **IEEE-CIS Fraud Detection** (główny) - Kaggle |
-| Śledzenie eksperymentów | Weights & Biases *(do ustalenia)* |
+| Śledzenie eksperymentów | Weights & Biases *(do ustalenia)* | -->
 
 ---
 
