@@ -65,7 +65,6 @@ Dlaczego ten: ~590k transakcji; jawne kolumny encji (`card1–6`, `DeviceInfo`, 
 flowchart TD
     S["Strumień transakcji<br/>(bank · processor · e-commerce)"]
     A["Preprocessing i budowa grafu<br/>(wspólne karty / urządzenia / IP / sklepy)"]
-    C["Generator scenariuszy continual<br/>drift czasowy · drift klastrowy"]
     D["Adapter PyGOD ↔ pyCLAD<br/>fit / predict / score · 3 reżimy nadzoru"]
     E["Modele GNN z PyGOD"]
     F["Klasyczne baseline (PyOD)<br/>np. Isolation Forest"]
@@ -73,9 +72,7 @@ flowchart TD
     H["Ewaluacja continual<br/>ROC-AUC · BWT · FWT · Forgetting"]
 
     S --> A
-    A --> C
     A --> D
-    C --> D
     D --> E
     D --> F
     E --> G
@@ -99,9 +96,9 @@ flowchart TD
 
 **Dlaczego to ważne.** Detektor wytrenowany na styczniowych fraudach po cichu degraduje się do czerwca. Modelujemy to wprost.
 
-**Dwa scenariusze driftu**
-- *Podział czasowy* - trening na minionych miesiącach, test na przyszłych. Naśladuje rzeczywiste wdrożenie: wczorajszy model wobec dzisiejszych transakcji.
-- *Podział klastrowy (concept splits)* - KMeans / HDBSCAN w przestrzeni cech definiuje ukryte "schematy" fraudu; zadania przychodzą jedno po drugim.
+
+*Podział czasowy* - trening na minionych miesiącach, test na przyszłych. Naśladuje rzeczywiste wdrożenie: wczorajszy model wobec dzisiejszych transakcji.
+<!-- - *Podział klastrowy (concept splits)* - KMeans / HDBSCAN w przestrzeni cech definiuje ukryte "schematy" fraudu; zadania przychodzą jedno po drugim. -->
 
 **Metryki**
 - *Jakość detekcji:* **ROC-AUC**.
@@ -125,8 +122,8 @@ flowchart TD
 | Dataset | **IEEE-CIS Fraud Detection** (główny) - Kaggle |
 | Śledzenie eksperymentów | Weights & Biases *(do ustalenia)* | -->
 
----
+<!-- --- -->
 
-## Produkt
+<!-- ## Produkt
 
-Działający detektor fraudów oparty na grafie · Adapter PyGOD ↔ pyCLAD · Scenariusze continual na publicznych danych bankowych/e-commerce · Dowód, że adaptuje się do driftu.
+Działający detektor fraudów oparty na grafie · Adapter PyGOD ↔ pyCLAD · Scenariusze continual na publicznych danych bankowych/e-commerce · Dowód, że adaptuje się do driftu. -->
