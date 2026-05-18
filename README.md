@@ -110,6 +110,8 @@ flowchart TD
 
 - PyGOD
 - pyCLAD
+- pyOD
+- pandas
 
 
 <!-- | Warstwa | Biblioteka |
