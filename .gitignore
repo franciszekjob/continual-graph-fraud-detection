@@ -1,0 +1,14 @@
+.venv/
+.env
+data/raw/
+*.csv
+*.zip
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+.env
+results/
+*.pt
+*.pth
