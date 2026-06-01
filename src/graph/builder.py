@@ -6,7 +6,7 @@ from torch_geometric.data import Data
 from src.data.preprocessor import get_node_features
 
 
-DEFAULT_EDGE_FEATURES = ["card1", "card2", "addr1", "P_emaildomain"]
+DEFAULT_EDGE_FEATURES = ["card1", "card2", "P_emaildomain", "R_emaildomain"]
 
 
 class TransactionGraphBuilder:

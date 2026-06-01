@@ -13,7 +13,7 @@ from src.evaluation.metrics import compute_roc_auc, print_metrics_table
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "raw")
 N_WINDOWS = 6
-MAX_ROWS_PER_WINDOW = 30_000
+MAX_ROWS_PER_WINDOW = 50_000
 RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "results")
 
 
@@ -82,7 +82,7 @@ def main():
     replay_matrix = run_continual_eval(
         GraphAnomalyDetectorWithReplay,
         windows,
-        detector_kwargs={"buffer_size": 500, "replay_ratio": 0.3},
+        detector_kwargs={"buffer_size": 800, "replay_ratio": 0.15},
     )
 
     print("\n=== RESULTS ===")

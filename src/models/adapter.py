@@ -12,7 +12,7 @@ class GraphAnomalyDetector:
     """
 
     def __init__(self, model_cls=DOMINANT, **model_kwargs):
-        model_kwargs.setdefault("epoch", 20)
+        model_kwargs.setdefault("epoch", 30)
         model_kwargs.setdefault("verbose", False)
         self.model = model_cls(**model_kwargs)
         self.graph_builder = TransactionGraphBuilder()
