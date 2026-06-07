@@ -11,11 +11,11 @@ class GraphAnomalyDetector:
     expected by pyCLAD. Accepts DataFrames, builds graphs internally.
     """
 
-    def __init__(self, model_cls=OCGNN, model_kwargs=None):
+    def __init__(self, model_cls=None, model_kwargs=None):
         kw = {"epoch": 30, "verbose": False}
         if model_kwargs:
             kw.update(model_kwargs)
-        self.model = model_cls(**kw)
+        self.model = (model_cls or OCGNN)(**kw)
         self.graph_builder = TransactionGraphBuilder()
 
     def fit(self, df: pd.DataFrame) -> "GraphAnomalyDetector":

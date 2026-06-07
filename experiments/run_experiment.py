@@ -6,10 +6,19 @@ import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
+from pygod.detector import OCGNN, DOMINANT, AnomalyDAE, CONAD
+
 from src.data.loader import load_ieee_cis_windowed
 from src.models.adapter import GraphAnomalyDetector
 from src.models.replay import GraphAnomalyDetectorWithReplay
 from src.evaluation.metrics import compute_roc_auc, print_metrics_table
+
+DETECTORS = {
+    "ocgnn": OCGNN,
+    "dominant": DOMINANT,
+    "anomalydae": AnomalyDAE,
+    "conad": CONAD,
+}
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "raw")
 RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "results")
@@ -30,6 +39,13 @@ def parse_args():
     # Model
     p.add_argument("--epochs", type=int, default=30)
     p.add_argument("--hidden-channels", type=int, default=64)
+
+    # Mode
+    p.add_argument("--mode", choices=["baseline", "replay", "both"], default="both")
+
+    # Detector
+    p.add_argument("--detector", choices=list(DETECTORS.keys()), default="ocgnn",
+                   help="PyGOD detector to use. Note: dominant/anomalydae/conad require more RAM (O(n²)).")
 
     return p.parse_args()
 
@@ -91,8 +107,9 @@ def main():
         + [f"V{i}" for i in range(1, args.v_cols_max + 1)]
     )
 
-    print(f"Config: windows={args.n_windows}, rows/window={args.max_rows_per_window}, "
-          f"V1-V{args.v_cols_max}, epochs={args.epochs}, hidden={args.hidden_channels}, "
+    print(f"Config: detector={args.detector}, mode={args.mode}, windows={args.n_windows}, "
+          f"rows/window={args.max_rows_per_window}, V1-V{args.v_cols_max}, "
+          f"epochs={args.epochs}, hidden={args.hidden_channels}, "
           f"buffer={args.buffer_size}, replay_ratio={args.replay_ratio}")
 
     print("\nLoading IEEE-CIS dataset (chunked)...")
@@ -101,26 +118,35 @@ def main():
     for i, w in enumerate(windows):
         print(f"  Window {i}: {len(w)} rows, {w['isFraud'].mean():.2%} fraud")
 
+    model_cls = DETECTORS[args.detector]
     model_kwargs = {"epoch": args.epochs, "hid_dim": args.hidden_channels}
 
-    print("\n--- Running BASELINE (no continual learning) ---")
-    baseline_matrix = run_continual_eval(GraphAnomalyDetector, windows, detector_kwargs={"model_kwargs": model_kwargs})
+    baseline_matrix = replay_matrix = None
 
-    print("\n--- Running REPLAY ---")
-    replay_matrix = run_continual_eval(
-        GraphAnomalyDetectorWithReplay,
-        windows,
-        detector_kwargs={
-            "buffer_size": args.buffer_size,
-            "replay_ratio": args.replay_ratio,
-            "model_kwargs": model_kwargs,
-        },
-    )
+    if args.mode in ("baseline", "both"):
+        print("\n--- Running BASELINE (no continual learning) ---")
+        baseline_matrix = run_continual_eval(
+            GraphAnomalyDetector, windows,
+            detector_kwargs={"model_cls": model_cls, "model_kwargs": model_kwargs},
+        )
 
-    print("\n=== RESULTS ===")
-    print_metrics_table(baseline_matrix, replay_matrix)
+    if args.mode in ("replay", "both"):
+        print("\n--- Running REPLAY ---")
+        replay_matrix = run_continual_eval(
+            GraphAnomalyDetectorWithReplay,
+            windows,
+            detector_kwargs={
+                "model_cls": model_cls,
+                "buffer_size": args.buffer_size,
+                "replay_ratio": args.replay_ratio,
+                "model_kwargs": model_kwargs,
+            },
+        )
 
-    plot_auc_matrices(baseline_matrix, replay_matrix, RESULTS_DIR)
+    if baseline_matrix is not None and replay_matrix is not None:
+        print("\n=== RESULTS ===")
+        print_metrics_table(baseline_matrix, replay_matrix)
+        plot_auc_matrices(baseline_matrix, replay_matrix, RESULTS_DIR)
 
 
 if __name__ == "__main__":

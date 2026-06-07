@@ -34,8 +34,8 @@ class ReplayBuffer:
 
 
 class GraphAnomalyDetectorWithReplay(GraphAnomalyDetector):
-    def __init__(self, buffer_size: int = 500, replay_ratio: float = 0.3, model_kwargs=None):
-        super().__init__(model_kwargs=model_kwargs)
+    def __init__(self, buffer_size: int = 500, replay_ratio: float = 0.3, model_cls=None, model_kwargs=None):
+        super().__init__(model_cls=model_cls, model_kwargs=model_kwargs)
         self.buffer = ReplayBuffer(buffer_size)
         self.replay_ratio = replay_ratio
 
