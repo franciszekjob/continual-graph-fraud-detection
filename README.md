@@ -129,32 +129,78 @@ uv run python experiments/run_experiment.py
 ```
 
 Skrypt uruchamia pełny pipeline:
-1. Ładuje dane i dzieli na 6 okien czasowych
-2. Trenuje **baseline** (DOMINANT bez continual learning)
-3. Trenuje **Replay** (DOMINANT z buforem historycznych próbek)
+1. Ładuje dane i dzieli na okna czasowe
+2. Trenuje **baseline** (GNN bez continual learning)
+3. Trenuje **Replay** (GNN z buforem historycznych próbek)
 4. Dla każdego okna treningowego ewaluuje oba modele na wszystkich oknach
 5. Drukuje tabelę metryk i zapisuje wykresy do `results/auc_matrices.png`
 
-### 3. Kluczowe parametry
+### 3. Tryb uruchomienia (CL vs bez CL)
 
-Edytuj `experiments/run_experiment.py`:
+Domyślnie skrypt uruchamia oba warianty. Możesz wybrać tylko jeden:
 
-```python
-N_WINDOWS = 6             # liczba okien czasowych
-MAX_ROWS_PER_WINDOW = 50_000  # rozmiar okna (mniej = szybciej)
+```bash
+# tylko baseline (bez continual learning)
+uv run python experiments/run_experiment.py --mode baseline
+
+# tylko Replay (z continual learning)
+uv run python experiments/run_experiment.py --mode replay
+
+# oba — porównanie (domyślne)
+uv run python experiments/run_experiment.py --mode both
 ```
 
-Edytuj `src/models/adapter.py`:
+Tabela metryk i wykres `auc_matrices.png` generują się tylko gdy uruchomione są oba tryby.
 
-```python
-model_kwargs.setdefault("epoch", 30)  # liczba epok treningu DOMINANT
+### 4. Wybór detektora
+
+```bash
+# OCGNN — domyślny, pamięć O(n), działa przy dużych oknach
+uv run python experiments/run_experiment.py --detector ocgnn
+
+# DOMINANT — O(n²) pamięci, wymaga mniejszych okien (max ~5000 wierszy przy 12 GB RAM)
+uv run python experiments/run_experiment.py --detector dominant --max-rows-per-window 5000
+
+# AnomalyDAE
+uv run python experiments/run_experiment.py --detector anomalydae --max-rows-per-window 5000
+
+# CONAD
+uv run python experiments/run_experiment.py --detector conad --max-rows-per-window 5000
 ```
 
-Edytuj `src/graph/builder.py`:
+Dostępne detektory:
 
-```python
-DEFAULT_EDGE_FEATURES = ["card1", "card2", "P_emaildomain", "R_emaildomain"]
-# dostępne encje: card1, card2, addr1, addr2, P_emaildomain, R_emaildomain, DeviceInfo
+| Detektor | Pamięć | Uwagi |
+|---|---|---|
+| `ocgnn` | O(n) | domyślny, działa przy 50k węzłów |
+| `dominant` | O(n²) | rekonstruuje macierz sąsiedztwa, wymaga małych okien |
+| `anomalydae` | O(n²) | jak DOMINANT |
+| `conad` | O(n²) | jak DOMINANT |
+
+### 5. Wszystkie parametry
+
+```bash
+uv run python experiments/run_experiment.py \
+  --mode both \               # baseline / replay / both
+  --detector ocgnn \          # ocgnn / dominant / anomalydae / conad
+  --n-windows 6 \             # liczba okien czasowych
+  --max-rows-per-window 50000 \  # rozmiar okna (mniej = szybciej, mniej RAM)
+  --v-cols-max 200 \          # zakres cech V1..Vn (max 339)
+  --epochs 50 \               # liczba epok treningu
+  --hidden-channels 128 \     # rozmiar warstwy ukrytej GNN
+  --buffer-size 5000 \        # rozmiar bufora replay
+  --replay-ratio 0.3          # udział próbek replay w treningu
+```
+
+Najlepsze znane parametry (Replay AUC=0.6566, FWT=0.1611):
+
+```bash
+uv run python experiments/run_experiment.py \
+  --v-cols-max 200 \
+  --buffer-size 5000 \
+  --replay-ratio 0.3 \
+  --epochs 50 \
+  --hidden-channels 128
 ```
 
 ---
