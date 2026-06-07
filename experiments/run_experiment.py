@@ -1,20 +1,37 @@
 import sys
 import os
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from src.data.loader import load_ieee_cis
-from src.data.preprocessor import temporal_split
+from src.data.loader import load_ieee_cis_windowed
 from src.models.adapter import GraphAnomalyDetector
 from src.models.replay import GraphAnomalyDetectorWithReplay
 from src.evaluation.metrics import compute_roc_auc, print_metrics_table
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "raw")
-N_WINDOWS = 6
-MAX_ROWS_PER_WINDOW = 50_000
 RESULTS_DIR = os.path.join(os.path.dirname(__file__), "..", "results")
+
+
+def parse_args():
+    p = argparse.ArgumentParser(description="Graph-based fraud detection experiment")
+
+    # Data
+    p.add_argument("--n-windows", type=int, default=6)
+    p.add_argument("--max-rows-per-window", type=int, default=50_000)
+    p.add_argument("--v-cols-max", type=int, default=39, help="Use V1..V<n> as node features (max 339)")
+
+    # Replay
+    p.add_argument("--buffer-size", type=int, default=800)
+    p.add_argument("--replay-ratio", type=float, default=0.15)
+
+    # Model
+    p.add_argument("--epochs", type=int, default=30)
+    p.add_argument("--hidden-channels", type=int, default=64)
+
+    return p.parse_args()
 
 
 def run_continual_eval(detector_cls, windows, detector_kwargs=None):
@@ -63,26 +80,41 @@ def plot_auc_matrices(baseline_matrix, replay_matrix, save_dir):
 
 
 def main():
-    print("Loading IEEE-CIS dataset...")
-    df = load_ieee_cis(DATA_DIR)
-    print(f"Loaded {len(df)} transactions, {df['isFraud'].mean():.2%} fraud rate")
+    args = parse_args()
 
-    print(f"\nSplitting into {N_WINDOWS} temporal windows...")
-    windows = temporal_split(df, n_windows=N_WINDOWS)
+    # Apply V-cols range before importing preprocessor defaults
+    from src.data import preprocessor
+    preprocessor.NUMERIC_FEATURE_COLS = (
+        ["TransactionAmt"]
+        + [f"C{i}" for i in range(1, 15)]
+        + [f"D{i}" for i in range(1, 16)]
+        + [f"V{i}" for i in range(1, args.v_cols_max + 1)]
+    )
 
-    # Limit size for prototype speed
-    windows = [w.head(MAX_ROWS_PER_WINDOW) for w in windows]
+    print(f"Config: windows={args.n_windows}, rows/window={args.max_rows_per_window}, "
+          f"V1-V{args.v_cols_max}, epochs={args.epochs}, hidden={args.hidden_channels}, "
+          f"buffer={args.buffer_size}, replay_ratio={args.replay_ratio}")
+
+    print("\nLoading IEEE-CIS dataset (chunked)...")
+    windows = load_ieee_cis_windowed(DATA_DIR, n_windows=args.n_windows, max_rows_per_window=args.max_rows_per_window)
+
     for i, w in enumerate(windows):
         print(f"  Window {i}: {len(w)} rows, {w['isFraud'].mean():.2%} fraud")
 
+    model_kwargs = {"epoch": args.epochs, "hid_dim": args.hidden_channels}
+
     print("\n--- Running BASELINE (no continual learning) ---")
-    baseline_matrix = run_continual_eval(GraphAnomalyDetector, windows)
+    baseline_matrix = run_continual_eval(GraphAnomalyDetector, windows, detector_kwargs={"model_kwargs": model_kwargs})
 
     print("\n--- Running REPLAY ---")
     replay_matrix = run_continual_eval(
         GraphAnomalyDetectorWithReplay,
         windows,
-        detector_kwargs={"buffer_size": 800, "replay_ratio": 0.15},
+        detector_kwargs={
+            "buffer_size": args.buffer_size,
+            "replay_ratio": args.replay_ratio,
+            "model_kwargs": model_kwargs,
+        },
     )
 
     print("\n=== RESULTS ===")

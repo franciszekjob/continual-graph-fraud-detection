@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from pygod.detector import DOMINANT
+from pygod.detector import OCGNN
 
 from src.graph.builder import TransactionGraphBuilder
 
@@ -11,10 +11,11 @@ class GraphAnomalyDetector:
     expected by pyCLAD. Accepts DataFrames, builds graphs internally.
     """
 
-    def __init__(self, model_cls=DOMINANT, **model_kwargs):
-        model_kwargs.setdefault("epoch", 30)
-        model_kwargs.setdefault("verbose", False)
-        self.model = model_cls(**model_kwargs)
+    def __init__(self, model_cls=OCGNN, model_kwargs=None):
+        kw = {"epoch": 30, "verbose": False}
+        if model_kwargs:
+            kw.update(model_kwargs)
+        self.model = model_cls(**kw)
         self.graph_builder = TransactionGraphBuilder()
 
     def fit(self, df: pd.DataFrame) -> "GraphAnomalyDetector":
@@ -23,8 +24,11 @@ class GraphAnomalyDetector:
         return self
 
     def score_samples(self, df: pd.DataFrame) -> np.ndarray:
-        graph = self.graph_builder.build(df)
-        scores = self.model.decision_function(graph)
+        key = id(df)
+        if not hasattr(self, "_graph_cache") or self._graph_cache_key != key:
+            self._graph_cache = self.graph_builder.build(df)
+            self._graph_cache_key = key
+        scores = self.model.decision_function(self._graph_cache)
         return np.array(scores)
 
     def predict(self, df: pd.DataFrame) -> np.ndarray:

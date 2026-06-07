@@ -106,6 +106,59 @@ flowchart TD
 
 ---
 
+## Uruchomienie
+
+### 1. Setup (jednorazowo)
+
+```bash
+# Wymaga uv: https://docs.astral.sh/uv/getting-started/installation/
+./setup.sh
+```
+
+Skrypt automatycznie:
+- instaluje Python 3.12 i zależności w `.venv`
+- tworzy katalogi `data/raw/` i `results/`
+- pobiera dataset IEEE-CIS jeśli `~/.kaggle/kaggle.json` istnieje
+
+Jeśli nie masz Kaggle CLI, pobierz dataset ręcznie z `kaggle.com/competitions/ieee-fraud-detection/data` i wrzuć pliki do `data/raw/`.
+
+### 2. Trening i ewaluacja
+
+```bash
+uv run python experiments/run_experiment.py
+```
+
+Skrypt uruchamia pełny pipeline:
+1. Ładuje dane i dzieli na 6 okien czasowych
+2. Trenuje **baseline** (DOMINANT bez continual learning)
+3. Trenuje **Replay** (DOMINANT z buforem historycznych próbek)
+4. Dla każdego okna treningowego ewaluuje oba modele na wszystkich oknach
+5. Drukuje tabelę metryk i zapisuje wykresy do `results/auc_matrices.png`
+
+### 3. Kluczowe parametry
+
+Edytuj `experiments/run_experiment.py`:
+
+```python
+N_WINDOWS = 6             # liczba okien czasowych
+MAX_ROWS_PER_WINDOW = 50_000  # rozmiar okna (mniej = szybciej)
+```
+
+Edytuj `src/models/adapter.py`:
+
+```python
+model_kwargs.setdefault("epoch", 30)  # liczba epok treningu DOMINANT
+```
+
+Edytuj `src/graph/builder.py`:
+
+```python
+DEFAULT_EDGE_FEATURES = ["card1", "card2", "P_emaildomain", "R_emaildomain"]
+# dostępne encje: card1, card2, addr1, addr2, P_emaildomain, R_emaildomain, DeviceInfo
+```
+
+---
+
 ## Biblioteki i tech stack
 
 - PyGOD

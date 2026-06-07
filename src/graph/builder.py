@@ -13,7 +13,7 @@ class TransactionGraphBuilder:
     def __init__(
         self,
         edge_features: list[str] = DEFAULT_EDGE_FEATURES,
-        max_entity_transactions: int = 500,
+        max_entity_transactions: int = 50,
     ):
         self.edge_features = edge_features
         self.max_entity_transactions = max_entity_transactions
@@ -22,20 +22,15 @@ class TransactionGraphBuilder:
         df = df.reset_index(drop=True)
         node_features = get_node_features(df)
 
-        edges = self._build_edges(df)
+        edge_index = self._build_edges(df)
 
         x = torch.tensor(node_features, dtype=torch.float)
         y = torch.tensor(df["isFraud"].values if "isFraud" in df.columns else np.zeros(len(df)), dtype=torch.long)
 
-        if edges:
-            edge_index = torch.tensor(np.array(edges).T, dtype=torch.long)
-        else:
-            edge_index = torch.zeros((2, 0), dtype=torch.long)
-
         return Data(x=x, edge_index=edge_index, y=y)
 
-    def _build_edges(self, df: pd.DataFrame) -> list[tuple[int, int]]:
-        edges = set()
+    def _build_edges(self, df: pd.DataFrame) -> torch.Tensor:
+        parts = []
         for feature in self.edge_features:
             if feature not in df.columns:
                 continue
@@ -43,11 +38,17 @@ class TransactionGraphBuilder:
             for val, indices in groups.items():
                 if val in ("unknown", "", float("nan")):
                     continue
-                idx_list = list(indices)
-                if len(idx_list) > self.max_entity_transactions:
+                idx = np.array(indices, dtype=np.int32)
+                if len(idx) < 2 or len(idx) > self.max_entity_transactions:
                     continue
-                for i in range(len(idx_list)):
-                    for j in range(i + 1, len(idx_list)):
-                        a, b = idx_list[i], idx_list[j]
-                        edges.add((min(a, b), max(a, b)))
-        return list(edges)
+                ii, jj = np.triu_indices(len(idx), k=1)
+                src, dst = idx[ii], idx[jj]
+                parts.append(np.stack([src, dst]))
+                parts.append(np.stack([dst, src]))
+
+        if not parts:
+            return torch.zeros((2, 0), dtype=torch.long)
+
+        edges = np.concatenate(parts, axis=1)
+        edges = np.unique(edges, axis=1)
+        return torch.tensor(edges, dtype=torch.long)

@@ -25,5 +25,5 @@ build-backend = "hatchling.build"
 packages = ["src"]
 
 [tool.uv]
-environments = ["sys_platform == 'darwin'"]
+# environments = ["sys_platform == 'darwin'"]
 find-links = ["https://data.pyg.org/whl/torch-2.9.1+cpu.html"]
