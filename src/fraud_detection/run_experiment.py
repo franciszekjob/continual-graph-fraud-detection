@@ -29,7 +29,9 @@ from pyclad.output.json_writer import JsonOutputWriter
 from pyclad.scenarios.concept_aware import ConceptAwareScenario
 from pyclad.strategies.baselines.cumulative import CumulativeStrategy
 from pyclad.strategies.baselines.naive import NaiveStrategy
-from pyclad.strategies.replay.buffers.adaptive_balanced import AdaptiveBalancedReplayBuffer
+from pyclad.strategies.replay.buffers.adaptive_balanced import (
+    AdaptiveBalancedReplayBuffer,
+)
 from pyclad.strategies.replay.replay import ReplayEnhancedStrategy
 from pyclad.strategies.replay.selection.random import RandomSelection
 from pygod.detector import CoLA, DOMINANT, OCGNN, AnomalyDAE
@@ -64,9 +66,17 @@ def make_strategy(name: str, model: PyGODAdapter, replay_buffer_size: int):
     raise ValueError(f"Unknown strategy '{name}'")
 
 
-def run_continual(graph, dataset, model_cfg: ModelConfig, strategy_name: str,
-                  replay_buffer_size: int, output_dir: pathlib.Path) -> dict:
-    adapter = PyGODAdapter(graph, MODEL_REGISTRY[model_cfg.name], model_cfg.detector_params())
+def run_continual(
+    graph,
+    dataset,
+    model_cfg: ModelConfig,
+    strategy_name: str,
+    replay_buffer_size: int,
+    output_dir: pathlib.Path,
+) -> dict:
+    adapter = PyGODAdapter(
+        graph, MODEL_REGISTRY[model_cfg.name], model_cfg.detector_params()
+    )
     strategy = make_strategy(strategy_name, adapter, replay_buffer_size)
     metric_callback = ConceptMetricCallback(
         base_metric=RocAuc(),
@@ -118,10 +128,16 @@ def print_comparison(callback_info: dict, static_results: dict) -> None:
 def parse_args(argv=None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Continual GNN fraud detection")
     parser.add_argument("--data-dir", type=pathlib.Path, default=pathlib.Path("data"))
-    parser.add_argument("--output-dir", type=pathlib.Path, default=pathlib.Path("outputs"))
+    parser.add_argument(
+        "--output-dir", type=pathlib.Path, default=pathlib.Path("outputs")
+    )
     parser.add_argument("--model", choices=sorted(MODEL_REGISTRY), default="dominant")
-    parser.add_argument("--strategy", choices=["naive", "replay", "cumulative"], default="naive")
-    parser.add_argument("--mode", choices=["both", "continual", "static"], default="both")
+    parser.add_argument(
+        "--strategy", choices=["naive", "replay", "cumulative"], default="naive"
+    )
+    parser.add_argument(
+        "--mode", choices=["both", "continual", "static"], default="both"
+    )
     parser.add_argument("--n-concepts", type=int, default=6)
     parser.add_argument("--train-ratio", type=float, default=0.7)
     parser.add_argument("--epochs", type=int, default=50)
@@ -129,28 +145,50 @@ def parse_args(argv=None) -> argparse.Namespace:
     parser.add_argument("--num-layers", type=int, default=2)
     parser.add_argument("--lr", type=float, default=0.004)
     parser.add_argument("--contamination", type=float, default=0.035)
-    parser.add_argument("--batch-size", type=int, default=4096,
-                        help="PyGOD mini-batch size; >0 enables NeighborLoader sampling")
-    parser.add_argument("--num-neigh", type=int, default=10,
-                        help="neighbors sampled per layer by NeighborLoader")
-    parser.add_argument("--max-neighbors-per-key", type=int, default=5,
-                        help="temporal edges per node per entity key")
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=4096,
+        help="PyGOD mini-batch size; >0 enables NeighborLoader sampling",
+    )
+    parser.add_argument(
+        "--num-neigh",
+        type=int,
+        default=10,
+        help="neighbors sampled per layer by NeighborLoader",
+    )
+    parser.add_argument(
+        "--max-neighbors-per-key",
+        type=int,
+        default=5,
+        help="temporal edges per node per entity key",
+    )
     parser.add_argument("--replay-buffer-size", type=int, default=20_000)
     parser.add_argument("--use-v-features", action="store_true")
-    parser.add_argument("--train-with-fraud", action="store_true",
-                        help="keep fraud rows in train concepts (default: normal-only)")
-    parser.add_argument("--nrows", type=int, default=None,
-                        help="row cap for quick smoke tests")
-    parser.add_argument("--cpu", action="store_true", help="force CPU even if CUDA is available")
+    parser.add_argument(
+        "--train-with-fraud",
+        action="store_true",
+        help="keep fraud rows in train concepts (default: normal-only)",
+    )
+    parser.add_argument(
+        "--nrows", type=int, default=None, help="row cap for quick smoke tests"
+    )
+    parser.add_argument(
+        "--cpu", action="store_true", help="force CPU even if CUDA is available"
+    )
     return parser.parse_args(argv)
 
 
 def main(argv=None) -> None:
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s"
+    )
     args = parse_args(argv)
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    data_cfg = DataConfig(data_dir=args.data_dir, use_v_features=args.use_v_features, nrows=args.nrows)
+    data_cfg = DataConfig(
+        data_dir=args.data_dir, use_v_features=args.use_v_features, nrows=args.nrows
+    )
     graph_cfg = GraphConfig(max_neighbors_per_key=args.max_neighbors_per_key)
     concept_cfg = ConceptConfig(
         n_concepts=args.n_concepts,
@@ -173,17 +211,26 @@ def main(argv=None) -> None:
     edge_cols = {c for group in graph_cfg.edge_key_groups for c in group}
     prepared = load_and_preprocess(data_cfg, edge_cols)
     graph = build_transaction_graph(prepared, graph_cfg)
-    dataset = build_concepts_dataset(prepared.labels, prepared.transaction_dt, concept_cfg)
+    dataset = build_concepts_dataset(
+        prepared.labels, prepared.transaction_dt, concept_cfg
+    )
 
     continual_info = None
     if args.mode in ("both", "continual"):
         continual_info = run_continual(
-            graph, dataset, model_cfg, args.strategy, args.replay_buffer_size, args.output_dir
+            graph,
+            dataset,
+            model_cfg,
+            args.strategy,
+            args.replay_buffer_size,
+            args.output_dir,
         )
 
     static_results = None
     if args.mode in ("both", "static"):
-        adapter = PyGODAdapter(graph, MODEL_REGISTRY[model_cfg.name], model_cfg.detector_params())
+        adapter = PyGODAdapter(
+            graph, MODEL_REGISTRY[model_cfg.name], model_cfg.detector_params()
+        )
         static_results = run_static_baseline(adapter, dataset)
         out_path = args.output_dir / f"static_{model_cfg.name}.json"
         out_path.write_text(json.dumps(static_results, indent=2))
@@ -193,7 +240,11 @@ def main(argv=None) -> None:
         print_comparison(continual_info, static_results)
     elif continual_info:
         matrix, summary, order = extract_continual_summary(continual_info)
-        print(json.dumps({"metric_matrix": matrix, "summary": summary, "order": order}, indent=2))
+        print(
+            json.dumps(
+                {"metric_matrix": matrix, "summary": summary, "order": order}, indent=2
+            )
+        )
     elif static_results:
         print(json.dumps(static_results, indent=2))
 

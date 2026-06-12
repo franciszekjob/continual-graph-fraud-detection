@@ -1,0 +1,66 @@
+ gcc/11.3.0 unloaded.
+ gcc/11.3.0 loaded.
+2026-06-11 21:26:27,709 INFO fraud_detection.run_experiment: Device: cpu
+2026-06-11 21:26:27,749 INFO fraud_detection.preprocessing: Reading data/train_transaction.csv (55 columns)
+2026-06-11 21:26:37,135 INFO fraud_detection.preprocessing: Prepared 590540 transactions, 52 features (3.5% fraud)
+2026-06-11 21:26:37,743 INFO fraud_detection.graph: Edge key card1+card2+card3+card4+card5+card6 -> 2741506 directed edges
+2026-06-11 21:26:38,058 INFO fraud_detection.graph: Edge key card1+addr1 -> 2253223 directed edges
+2026-06-11 21:26:38,354 INFO fraud_detection.graph: Edge key card1+P_emaildomain -> 2113273 directed edges
+/net/afscra/people/plgciszew/fraud-detection-fable/src/fraud_detection/graph.py:86: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:206.)
+  y=torch.from_numpy(prepared.labels),
+2026-06-11 21:26:39,058 INFO fraud_detection.graph: Global graph: 590540 nodes, 5227570 undirected edges, 3627 isolated nodes
+2026-06-11 21:26:39,065 INFO fraud_detection.concepts: month_1: 92194 train / 40567 test nodes (test fraud rate 2.49%)
+2026-06-11 21:26:39,066 INFO fraud_detection.concepts: month_2: 60523 train / 26985 test nodes (test fraud rate 4.11%)
+2026-06-11 21:26:39,067 INFO fraud_detection.concepts: month_3: 63577 train / 28428 test nodes (test fraud rate 3.90%)
+2026-06-11 21:26:39,068 INFO fraud_detection.concepts: month_4: 66381 train / 29492 test nodes (test fraud rate 4.86%)
+2026-06-11 21:26:39,069 INFO fraud_detection.concepts: month_5: 57370 train / 25482 test nodes (test fraud rate 3.03%)
+2026-06-11 21:26:39,070 INFO fraud_detection.concepts: month_6: 59186 train / 26212 test nodes (test fraud rate 4.14%)
+2026-06-11 21:26:39,070 INFO pyclad.scenarios.concept_aware: Starting training on concept month_1
+2026-06-11 21:26:39,102 INFO fraud_detection.adapter: [OCGNN] fit on 92194 nodes / 1341973 edges
+2026-06-11 21:27:07,291 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:27:07,495 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:27:07,616 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:27:07,745 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:27:07,877 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:27:07,988 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:27:08,104 INFO pyclad.scenarios.concept_aware: Starting training on concept month_2
+2026-06-11 21:27:08,127 INFO fraud_detection.adapter: [OCGNN] fit on 152717 nodes / 2236682 edges
+2026-06-11 21:27:59,360 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:27:59,559 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:27:59,679 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:27:59,800 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:27:59,928 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:28:00,036 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:28:00,147 INFO pyclad.scenarios.concept_aware: Starting training on concept month_3
+2026-06-11 21:28:00,176 INFO fraud_detection.adapter: [OCGNN] fit on 216294 nodes / 3220264 edges
+2026-06-11 21:29:17,752 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:29:17,950 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:29:18,074 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:29:18,204 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:29:18,335 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:29:18,445 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:29:18,561 INFO pyclad.scenarios.concept_aware: Starting training on concept month_4
+2026-06-11 21:29:18,594 INFO fraud_detection.adapter: [OCGNN] fit on 282675 nodes / 4262698 edges
+2026-06-11 21:31:08,254 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:31:08,455 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:31:08,581 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:31:08,714 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:31:08,845 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:31:08,953 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:31:09,066 INFO pyclad.scenarios.concept_aware: Starting training on concept month_5
+2026-06-11 21:31:09,105 INFO fraud_detection.adapter: [OCGNN] fit on 340045 nodes / 5165113 edges
+2026-06-11 21:33:21,612 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:33:21,807 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:33:21,927 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:33:22,048 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:33:22,167 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:33:22,271 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:33:22,382 INFO pyclad.scenarios.concept_aware: Starting training on concept month_6
+2026-06-11 21:33:22,424 INFO fraud_detection.adapter: [OCGNN] fit on 399231 nodes / 6090180 edges
+2026-06-11 21:36:03,517 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:36:03,704 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:36:03,813 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:36:03,930 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:36:04,053 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:36:04,150 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:36:04,258 INFO fraud_detection.run_experiment: Continual results written to outputs/continual_ocgnn_cumulative.json

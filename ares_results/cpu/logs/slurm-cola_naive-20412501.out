@@ -1,0 +1,103 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"11.3.0"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "11.3.0"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+2026-06-11 21:30:50,591 INFO fraud_detection.run_experiment: Device: cpu
+2026-06-11 21:30:50,630 INFO fraud_detection.preprocessing: Reading data/train_transaction.csv (55 columns)
+2026-06-11 21:31:01,469 INFO fraud_detection.preprocessing: Prepared 590540 transactions, 52 features (3.5% fraud)
+2026-06-11 21:31:02,108 INFO fraud_detection.graph: Edge key card1+card2+card3+card4+card5+card6 -> 2741506 directed edges
+2026-06-11 21:31:02,424 INFO fraud_detection.graph: Edge key card1+addr1 -> 2253223 directed edges
+2026-06-11 21:31:02,717 INFO fraud_detection.graph: Edge key card1+P_emaildomain -> 2113273 directed edges
+/net/afscra/people/plgciszew/fraud-detection-fable/src/fraud_detection/graph.py:86: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:206.)
+  y=torch.from_numpy(prepared.labels),
+2026-06-11 21:31:03,510 INFO fraud_detection.graph: Global graph: 590540 nodes, 5227570 undirected edges, 3627 isolated nodes
+2026-06-11 21:31:03,518 INFO fraud_detection.concepts: month_1: 92194 train / 40567 test nodes (test fraud rate 2.49%)
+2026-06-11 21:31:03,519 INFO fraud_detection.concepts: month_2: 60523 train / 26985 test nodes (test fraud rate 4.11%)
+2026-06-11 21:31:03,520 INFO fraud_detection.concepts: month_3: 63577 train / 28428 test nodes (test fraud rate 3.90%)
+2026-06-11 21:31:03,522 INFO fraud_detection.concepts: month_4: 66381 train / 29492 test nodes (test fraud rate 4.86%)
+2026-06-11 21:31:03,523 INFO fraud_detection.concepts: month_5: 57370 train / 25482 test nodes (test fraud rate 3.03%)
+2026-06-11 21:31:03,524 INFO fraud_detection.concepts: month_6: 59186 train / 26212 test nodes (test fraud rate 4.14%)
+2026-06-11 21:31:03,524 INFO pyclad.scenarios.concept_aware: Starting training on concept month_1
+2026-06-11 21:31:03,563 INFO fraud_detection.adapter: [CoLA] fit on 92194 nodes / 1341973 edges
+2026-06-11 21:31:24,128 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:31:24,592 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:31:24,918 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:31:25,275 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:31:25,626 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:31:25,892 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:31:26,221 INFO pyclad.scenarios.concept_aware: Starting training on concept month_2
+2026-06-11 21:31:26,245 INFO fraud_detection.adapter: [CoLA] fit on 60523 nodes / 809422 edges
+2026-06-11 21:31:37,929 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:31:38,370 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:31:38,607 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:31:38,857 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:31:39,102 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:31:39,328 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:31:39,578 INFO pyclad.scenarios.concept_aware: Starting training on concept month_3
+2026-06-11 21:31:39,599 INFO fraud_detection.adapter: [CoLA] fit on 63577 nodes / 866422 edges
+2026-06-11 21:31:50,845 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:31:51,210 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:31:51,424 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:31:51,640 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:31:51,883 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:31:52,093 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:31:52,296 INFO pyclad.scenarios.concept_aware: Starting training on concept month_4
+2026-06-11 21:31:52,316 INFO fraud_detection.adapter: [CoLA] fit on 66381 nodes / 911765 edges
+2026-06-11 21:32:06,623 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:32:07,015 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:32:07,241 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:32:07,525 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:32:07,821 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:32:08,049 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:32:08,282 INFO pyclad.scenarios.concept_aware: Starting training on concept month_5
+2026-06-11 21:32:08,302 INFO fraud_detection.adapter: [CoLA] fit on 57370 nodes / 775940 edges
+2026-06-11 21:32:18,547 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:32:18,907 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:32:19,125 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:32:19,357 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:32:19,599 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:32:19,798 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:32:20,014 INFO pyclad.scenarios.concept_aware: Starting training on concept month_6
+2026-06-11 21:32:20,033 INFO fraud_detection.adapter: [CoLA] fit on 59186 nodes / 794915 edges
+2026-06-11 21:32:31,790 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 21:32:32,219 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 21:32:32,443 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 21:32:32,659 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 21:32:32,874 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 21:32:33,079 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 21:32:33,271 INFO fraud_detection.run_experiment: Continual results written to outputs/continual_cola_naive.json
+2026-06-11 21:32:33,272 INFO fraud_detection.baseline: Static baseline: training PyGOD-CoLA once on month_1
+2026-06-11 21:32:33,294 INFO fraud_detection.adapter: [CoLA] fit on 92194 nodes / 1341973 edges
+2026-06-11 21:32:54,302 INFO fraud_detection.baseline: Static eval month_1: ROC-AUC=0.4374 F1=0.0234
+2026-06-11 21:32:54,610 INFO fraud_detection.baseline: Static eval month_2: ROC-AUC=0.4699 F1=0.0492
+2026-06-11 21:32:54,944 INFO fraud_detection.baseline: Static eval month_3: ROC-AUC=0.4582 F1=0.0408
+2026-06-11 21:32:55,298 INFO fraud_detection.baseline: Static eval month_4: ROC-AUC=0.4937 F1=0.0517
+2026-06-11 21:32:55,554 INFO fraud_detection.baseline: Static eval month_5: ROC-AUC=0.4936 F1=0.0341
+2026-06-11 21:32:55,796 INFO fraud_detection.baseline: Static eval month_6: ROC-AUC=0.4970 F1=0.0475
+2026-06-11 21:32:55,797 INFO fraud_detection.run_experiment: Static baseline results written to outputs/static_cola.json
+
+=== ROC-AUC per monthly concept: continual vs static offline ===
+concept     static (frozen)  continual @learn  continual @final
+---------------------------------------------------------------
+month_1              0.4374            0.4503            0.3899
+month_2              0.4699            0.4215            0.4200
+month_3              0.4582            0.3967            0.3687
+month_4              0.4937            0.3658            0.3621
+month_5              0.4936            0.4076            0.4040
+month_6              0.4970            0.3646            0.3646
+
+Continual summary metrics:
+  ContinualAverage: 0.3976
+  BackwardTransfer: -0.0065
+  ForwardTransfer: 0.4278
+Static average ROC-AUC: 0.4750
+
+(@learn = evaluated right after that concept was learned; @final = evaluated after the whole stream — the gap shows forgetting/adaptation. Static column never updates after month 1.)

@@ -77,9 +77,7 @@ class PyGODAdapter(Model):
         ``max_num_nodes``), so a trailing isolated node would otherwise shrink
         the matrix and crash batch indexing.
         """
-        node_idx = torch.as_tensor(
-            np.asarray(data).reshape(-1), dtype=torch.long
-        )
+        node_idx = torch.as_tensor(np.asarray(data).reshape(-1), dtype=torch.long)
         subgraph = self._graph.subgraph(node_idx)
         connected = torch.zeros(subgraph.num_nodes, dtype=torch.bool)
         connected[subgraph.edge_index.reshape(-1)] = True
@@ -107,10 +105,16 @@ class PyGODAdapter(Model):
         if self._detector is None:
             raise RuntimeError("predict() called before fit().")
         subgraph = self._subgraph(data)
-        pred, score = self._detector.predict(subgraph, return_pred=True, return_score=True)
-        y_pred = np.asarray(pred.cpu() if torch.is_tensor(pred) else pred, dtype=np.int64)
+        pred, score = self._detector.predict(
+            subgraph, return_pred=True, return_score=True
+        )
+        y_pred = np.asarray(
+            pred.cpu() if torch.is_tensor(pred) else pred, dtype=np.int64
+        )
         scores = np.nan_to_num(
-            np.asarray(score.cpu() if torch.is_tensor(score) else score, dtype=np.float64)
+            np.asarray(
+                score.cpu() if torch.is_tensor(score) else score, dtype=np.float64
+            )
         )
         return y_pred, scores
 
