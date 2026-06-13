@@ -207,6 +207,8 @@ def main(argv=None) -> None:
         gpu=0 if (torch.cuda.is_available() and not args.cpu) else -1,
     )
     logger.info("Device: %s", "cuda:0" if model_cfg.gpu >= 0 else "cpu")
+    logger.info("Threads: %s", torch.get_num_threads())
+    logger.info("Threads inter-op: %s", torch.get_num_interop_threads())
 
     edge_cols = {c for group in graph_cfg.edge_key_groups for c in group}
     prepared = load_and_preprocess(data_cfg, edge_cols)
