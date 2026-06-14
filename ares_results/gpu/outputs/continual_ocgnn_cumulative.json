@@ -1,0 +1,121 @@
+{
+    "model": {
+        "name": "PyGOD-OCGNN",
+        "detector_params": {
+            "hid_dim": "64",
+            "num_layers": "2",
+            "epoch": "100",
+            "lr": "0.004",
+            "contamination": "0.035",
+            "batch_size": "32768",
+            "num_neigh": "10",
+            "gpu": "0"
+        }
+    },
+    "dataset": {
+        "name": "ieee-cis-fraud-temporal",
+        "tran_concepts_no": 6,
+        "test_concepts_no": 6
+    },
+    "strategy": {
+        "name": "Cumulative",
+        "model": "PyGOD-OCGNN",
+        "buffer_size": 399231
+    },
+    "concept_metric_callback_ROC-AUC": {
+        "base_metric_name": "ROC-AUC",
+        "metrics": {
+            "ContinualAverage": 0.5042733933319171,
+            "BackwardTransfer": 0.011787462777661135,
+            "ForwardTransfer": 0.46997927229836023
+        },
+        "concepts_order": [
+            "month_1",
+            "month_2",
+            "month_3",
+            "month_4",
+            "month_5",
+            "month_6"
+        ],
+        "metric_matrix": {
+            "month_1": {
+                "month_1": 0.4376210081259047,
+                "month_2": 0.49483681942812385,
+                "month_3": 0.43447451913674545,
+                "month_4": 0.3742660650239049,
+                "month_5": 0.44419426311349863,
+                "month_6": 0.40090073103382157
+            },
+            "month_2": {
+                "month_1": 0.3437309801506914,
+                "month_2": 0.44816294555424996,
+                "month_3": 0.45031084657832565,
+                "month_4": 0.36621257639957394,
+                "month_5": 0.47463146082855295,
+                "month_6": 0.45156373205013584
+            },
+            "month_3": {
+                "month_1": 0.4167411082001312,
+                "month_2": 0.5056952778865822,
+                "month_3": 0.4849538132099307,
+                "month_4": 0.4819667851798919,
+                "month_5": 0.5027661662462686,
+                "month_6": 0.5142666778955245
+            },
+            "month_4": {
+                "month_1": 0.5155122702752282,
+                "month_2": 0.5164189929059494,
+                "month_3": 0.5582644159870185,
+                "month_4": 0.5374573892712575,
+                "month_5": 0.546530237141879,
+                "month_6": 0.5647065676650821
+            },
+            "month_5": {
+                "month_1": 0.499761597050705,
+                "month_2": 0.5096798537668102,
+                "month_3": 0.5136436524464694,
+                "month_4": 0.6027491693088823,
+                "month_5": 0.5413387317703942,
+                "month_6": 0.5480616367540744
+            },
+            "month_6": {
+                "month_1": 0.51067668379147,
+                "month_2": 0.533953118335727,
+                "month_3": 0.5482128345164411,
+                "month_4": 0.4732590928156092,
+                "month_5": 0.5602441001374068,
+                "month_6": 0.5316642244634006
+            }
+        }
+    },
+    "time_evaluation_callback": {
+        "time_by_concept": {
+            "month_1": {
+                "train_time": 15.567317247390747,
+                "eval_time": 0.4346954822540283
+            },
+            "month_2": {
+                "train_time": 28.94021725654602,
+                "eval_time": 0.25899171829223633
+            },
+            "month_3": {
+                "train_time": 46.06654357910156,
+                "eval_time": 0.26609325408935547
+            },
+            "month_4": {
+                "train_time": 64.77866125106812,
+                "eval_time": 0.2708451747894287
+            },
+            "month_5": {
+                "train_time": 83.02056241035461,
+                "eval_time": 0.24457669258117676
+            },
+            "month_6": {
+                "train_time": 99.857008934021,
+                "eval_time": 0.2476053237915039
+            }
+        },
+        "train_time_total": 338.23031067848206,
+        "eval_time_total": 1.7228076457977295
+    }
+}
