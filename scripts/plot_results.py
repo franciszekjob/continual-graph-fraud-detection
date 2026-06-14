@@ -8,9 +8,10 @@ a *curated* list of runs so we can:
     ``continual_dominant_replay.json`` regardless of ``--use-v-features``, so the
     391-feature run overwrote the file name but its ContinualAverage (0.7288...)
     matches the v-features Slurm log exactly;
-  * exclude the stale ``dominant_naive`` JSON (ContinualAverage 0.599, only 7.6 s
-    total training) — every dominant_naive Slurm job OOM-killed at full scale, so
-    that JSON is an old capped smoke test and contradicts the real runs.
+  * include ``dominant_naive`` (ContinualAverage 0.599) — NOTE this run used a
+    reduced config (epoch=5, batch_size=1024, ~7.6 s total) and is not directly
+    comparable to the heavier runs; the two ares_results/{cpu,gpu} copies are
+    byte-identical, so it appears once.
 
 Produces, under ``plots/``:
   * heatmap_<run>.png            — per-run 6x6 learned x evaluated ROC-AUC
@@ -68,6 +69,8 @@ RUNS: list[Run] = [
         R2 / "cpu/outputs/continual_cola_cumulative.json",  R2 / "cpu/outputs/static_cola.json"),
     Run("CoLA / Replay",        "CoLA",     "Replay",     52, "cpu",
         R2 / "cpu/outputs/continual_cola_replay.json",      R2 / "cpu/outputs/static_cola.json"),
+    Run("DOMINANT / Naive",     "DOMINANT", "Naive",      52, "cpu",
+        R1 / "gpu/outputs/continual_dominant_naive.json",   R1 / "gpu/outputs/static_dominant.json"),
     Run("DOMINANT / Replay",    "DOMINANT", "Replay",     52, "gpu",
         R2 / "gpu/outputs/continual_dominant_replay.json",  R2 / "gpu/outputs/static_dominant.json"),
     Run("DOMINANT / Replay (V-feat)", "DOMINANT", "Replay", 391, "cpu",

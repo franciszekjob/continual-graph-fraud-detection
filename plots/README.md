@@ -39,8 +39,13 @@ uv run python scripts/plot_results.py
    log, so it is labelled **DOMINANT / Replay (V-feat)** here. The GPU file is
    the 52-feature run.
 
-2. **`dominant_naive` is excluded.** The only `dominant_naive` JSON reports
-   ContinualAverage 0.599 with 7.6 s total training — implausible at full scale
-   (the real DOMINANT replay took hours) and every `dominant_naive` Slurm job
-   OOM-killed. It is an old capped smoke test and would contradict the real
-   "DOMINANT/Naive ran out of memory" story, so it is left out.
+2. **`dominant_naive` is included, but it is a reduced-config run.** Its JSON
+   reports ContinualAverage 0.599, but it used `epoch=5`, `batch_size=1024`
+   (~7.6 s total training) — far lighter than the other runs (epoch 20–50), so it
+   is **not directly comparable** on the quality axis and is tiny on the
+   training-time plot. The `ares_results/cpu` and `ares_results/gpu` copies are
+   byte-identical, so it appears once. (The full-scale `dominant_naive` Slurm jobs
+   separately OOM-killed; this JSON is from the lighter config.)
+
+`dominant_cumulative` has **no** data point — it crashed allocating ~187 GB for
+the dense N×N adjacency on the full cumulative node set, so its cell is blank.
