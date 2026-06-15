@@ -45,14 +45,6 @@ AGH · semestr 8
 - *Cechy tabelaryczne transakcji:* kwota, czas, waluta, urządzenie, IP, sklep, karta, konto, geo, … (z wysoko ocenianych pipeline'ów preprocessingowych z Kaggle).
 - *Krawędzie grafu:* wspólna karta / urządzenie / IP / konto / sklep - ta sama encja dotykająca wielu transakcji.
 
-<!-- **Trzy reżimy nadzoru = trzy realistyczne scenariusze wdrożeniowe**
-
-| Rzeczywistość banku | Dostępne etykiety | Nasz reżim |
-|---|---|---|
-| Tylko potwierdzona historia "czystych" (bez chargebacków) | Brak dla fraudów | *Semi-supervised / jednoklasowe* |
-| Backlog zespołu śledczego | 1 % → 5 % → 10 % → 20 % | *Few-shot* |
-| Pełna historia z etykietami (rzadkie, drogie) | Wszystkie | *W pełni nadzorowane* | -->
-
 **Główny dataset - IEEE-CIS Fraud Detection** (Kaggle).
 Dlaczego ten: ~590k transakcji; jawne kolumny encji (`card1–6`, `DeviceInfo`, `addr1/2`, `id_30–34`, domena email) tworzą naturalne krawędzie grafu; timestampy transakcji wspierają drift czasowy; duża pula publicznych pipeline'ów preprocessingowych z Kaggle do ponownego użycia.
 *Stretch:* walidacja na drugim datasecie z FDB (np. Fraud Ecommerce) dla robustności - tylko jeśli Faza 1 + Faza 2 na IEEE-CIS skończą się na czas.
@@ -88,8 +80,6 @@ flowchart TD
     class H eval;
 ```
 
-<!-- **Adapter PyGOD ↔ pyCLAD** to nasz kluczowy wkład techniczny - jedno API `fit / predict / score` re-używane w eksperymentach statycznych *i* continual. -->
-
 ---
 
 ## Jak utrzymujemy detektor sprawnym, gdy fraud ewoluuje
@@ -98,8 +88,6 @@ flowchart TD
 
 
 *Podział czasowy* - trening na minionych miesiącach, test na przyszłych. Naśladuje rzeczywiste wdrożenie: wczorajszy model wobec dzisiejszych transakcji.
-<!-- - *Podział klastrowy (concept splits)* - KMeans / HDBSCAN w przestrzeni cech definiuje ukryte "schematy" fraudu; zadania przychodzą jedno po drugim. -->
-
 **Metryki**
 - *Jakość detekcji:* **ROC-AUC**.
 - *Zachowanie continual:* **Backward Transfer (BWT)**, **Forward Transfer (FWT)**, **Forgetting** - czy detektor pamięta stare schematy, przenosi doświadczenie do przodu, czy katastroficznie zapomina?
@@ -112,20 +100,3 @@ flowchart TD
 - pyCLAD
 - pyOD
 - pandas
-
-
-<!-- | Warstwa | Biblioteka |
-|-------|---------|
-| Modele anomalii grafowych | **PyGOD** |
-| Backend grafowy | **PyTorch Geometric**, PyTorch |
-| Protokół continual learning | **pyCLAD** |
-| Klasyczne baseline | **PyOD**, scikit-learn |
-| Dane / cechy | pandas, numpy, publiczne notebooki Kaggle |
-| Dataset | **IEEE-CIS Fraud Detection** (główny) - Kaggle |
-| Śledzenie eksperymentów | Weights & Biases *(do ustalenia)* | -->
-
-<!-- --- -->
-
-<!-- ## Produkt
-
-Działający detektor fraudów oparty na grafie · Adapter PyGOD ↔ pyCLAD · Scenariusze continual na publicznych danych bankowych/e-commerce · Dowód, że adaptuje się do driftu. -->
