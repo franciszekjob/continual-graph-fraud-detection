@@ -1,0 +1,126 @@
+{
+    "model": {
+        "name": "PyGOD-OCGNN",
+        "detector_params": {
+            "hid_dim": "64",
+            "num_layers": "2",
+            "epoch": "30",
+            "lr": "0.004",
+            "contamination": "0.035",
+            "batch_size": "8192",
+            "num_neigh": "10",
+            "gpu": "-1"
+        }
+    },
+    "dataset": {
+        "name": "ieee-cis-fraud-temporal",
+        "tran_concepts_no": 6,
+        "test_concepts_no": 6
+    },
+    "strategy": {
+        "name": "ReplayEnhanced",
+        "replay_buffer": {
+            "name": "AdaptiveBalancedReplayBuffer",
+            "max_size": 20000,
+            "selection_method": "RandomSelection",
+            "current_size": 19998,
+            "buffer_size": 19998
+        }
+    },
+    "concept_metric_callback_ROC-AUC": {
+        "base_metric_name": "ROC-AUC",
+        "metrics": {
+            "ContinualAverage": 0.688427625404575,
+            "BackwardTransfer": 0.0029428139609331957,
+            "ForwardTransfer": 0.6883113028111267
+        },
+        "concepts_order": [
+            "month_1",
+            "month_2",
+            "month_3",
+            "month_4",
+            "month_5",
+            "month_6"
+        ],
+        "metric_matrix": {
+            "month_1": {
+                "month_1": 0.6644162043389837,
+                "month_2": 0.7039036949993472,
+                "month_3": 0.6985369448070997,
+                "month_4": 0.7117272171720802,
+                "month_5": 0.6790698660694017,
+                "month_6": 0.7176561621142151
+            },
+            "month_2": {
+                "month_1": 0.6292307646528293,
+                "month_2": 0.6835684031857945,
+                "month_3": 0.6759881052745638,
+                "month_4": 0.7120109863081983,
+                "month_5": 0.6629771678108665,
+                "month_6": 0.6974322526803767
+            },
+            "month_3": {
+                "month_1": 0.6012638031906887,
+                "month_2": 0.655164277320799,
+                "month_3": 0.6561021170404512,
+                "month_4": 0.6710046250081895,
+                "month_5": 0.6237328156813121,
+                "month_6": 0.6582806082757269
+            },
+            "month_4": {
+                "month_1": 0.6490730216181013,
+                "month_2": 0.6844810027418723,
+                "month_3": 0.705527928786253,
+                "month_4": 0.7341011615409523,
+                "month_5": 0.6646904887162263,
+                "month_6": 0.7073301939440688
+            },
+            "month_5": {
+                "month_1": 0.6934575169145067,
+                "month_2": 0.7087969186577883,
+                "month_3": 0.7197890293407192,
+                "month_4": 0.7561263811672037,
+                "month_5": 0.7020865222726994,
+                "month_6": 0.7403284133052288
+            },
+            "month_6": {
+                "month_1": 0.6378526170662504,
+                "month_2": 0.6956939548243897,
+                "month_3": 0.7066914189892753,
+                "month_4": 0.7473856455739769,
+                "month_5": 0.6967929813389867,
+                "month_6": 0.7293784629335552
+            }
+        }
+    },
+    "time_evaluation_callback": {
+        "time_by_concept": {
+            "month_1": {
+                "train_time": 32.72024393081665,
+                "eval_time": 1.368682861328125
+            },
+            "month_2": {
+                "train_time": 21.37521195411682,
+                "eval_time": 0.8166429996490479
+            },
+            "month_3": {
+                "train_time": 21.817136526107788,
+                "eval_time": 0.8723139762878418
+            },
+            "month_4": {
+                "train_time": 22.387187004089355,
+                "eval_time": 0.8974807262420654
+            },
+            "month_5": {
+                "train_time": 18.271649599075317,
+                "eval_time": 0.740492582321167
+            },
+            "month_6": {
+                "train_time": 18.00172996520996,
+                "eval_time": 0.7797019481658936
+            }
+        },
+        "train_time_total": 134.5731589794159,
+        "eval_time_total": 5.475315093994141
+    }
+}

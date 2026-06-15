@@ -209,6 +209,118 @@ flowchart LR
         </ul>
       </section>
 
+      <!-- ====================== CZĘŚĆ 2: WYNIKI ====================== -->
+
+      <!-- Slajd 9 - przerywnik -->
+      <section>
+        <h1>Część 2: Wyniki</h1>
+        <p style="font-size:0.9em; color:#444;">Co faktycznie zbudowaliśmy i czego się nauczyliśmy</p>
+      </section>
+
+      <!-- Slajd 10 - co przetestowaliśmy -->
+      <section>
+        <h2>Co przetestowaliśmy</h2>
+        <ul>
+          <li><strong>Dane:</strong> IEEE-CIS, ~590 tys. transakcji, ~3,5% fraudów, podzielone na
+            <strong>6 miesięcznych konceptów</strong> (dryf wzorców w czasie)
+          </li>
+          <li><strong>Detektory (PyGOD):</strong> OCGNN, CoLA, DOMINANT</li>
+          <li><strong>Strategie continual learning:</strong> Naive, Replay, Cumulative</li>
+          <li><strong>Punkt odniesienia:</strong> static baseline - trening raz na pierwszym miesiącu,
+            ocena na wszystkich 6 miesiącach</li>
+        </ul>
+      </section>
+
+      <!-- Slajd 11 - jak czytać wyniki -->
+      <section>
+        <h2>Jak czytać wyniki</h2>
+        <ul>
+          <li><strong>ROC-AUC:</strong> 1,0 = idealnie, <strong>0,5 = losowo</strong> (czerwona linia na wykresach)</li>
+          <li><strong>Heatmapa:</strong> wiersz = czego model się nauczył, kolumna = na czym testujemy →
+            przekątna to "świeża" wiedza, dolny wiersz to skuteczność po całym strumieniu</li>
+          <li><strong>ContinualAverage:</strong> średnia skuteczność przez cały strumień</li>
+          <li><strong>BWT / FWT:</strong> czy wiedza przenosi się wstecz / w przód
+            (BWT &lt; 0 oznacza zapominanie)</li>
+        </ul>
+      </section>
+
+      <!-- Slajd 12 - przegląd / summary heatmap -->
+      <section>
+        <h2>Przegląd: skuteczność model × strategia</h2>
+        <img src="../plots/summary_heatmap.png" alt="summary heatmap"
+          style="max-height:430px; display:block; margin:0 auto;">
+        <p class="small">Tylko <strong>OCGNN/Replay (0,69)</strong> i <strong>DOMINANT/Replay z V-features
+            (0,73)</strong>
+          wyraźnie odstają od losowego.</p>
+      </section>
+
+      <!-- Slajd 13 - średnia skuteczność -->
+      <section>
+        <h2>Skuteczność: continual vs static</h2>
+        <img src="../plots/continual_average.png" alt="continual average"
+          style="max-height:440px; display:block; margin:0 auto;">
+        <p class="small">Uczenie ciągłe (Replay) potrafi wyraźnie pobić zamrożony model statyczny.</p>
+      </section>
+
+      <!-- Slajd 14 - transfer -->
+      <section>
+        <h2>Transfer wiedzy: Forward / Backward</h2>
+        <img src="../plots/transfer_metrics.png" alt="transfer metrics"
+          style="max-height:430px; display:block; margin:0 auto;">
+        <p class="small"><strong>BWT ≈ 0</strong> wszędzie → prawie nie ma
+          catastrophic forgetting.</p>
+      </section>
+
+      <!-- Slajd 15 - koszt obliczeniowy -->
+      <section>
+        <h2>Koszt obliczeniowy</h2>
+        <img src="../plots/training_times.png" alt="training times"
+          style="max-height:430px; display:block; margin:0 auto;">
+        <p class="small">DOMINANT jest kosztowny pamięciowo: 7,6 h treningu (V-features) - dlatego jego warianty
+          Naive i Cumulative powodowały <strong>OOM</strong> przy pełnym grafie.</p>
+      </section>
+
+      <!-- Slajd 16 - macierze -->
+      <section>
+        <h2>Pełne macierze ROC-AUC (learned × evaluated)</h2>
+        <img src="../plots/heatmaps_grid.png" alt="heatmaps grid"
+          style="max-height:470px; display:block; margin:0 auto;">
+      </section>
+
+      <!-- Slajd 17 - wnioski -->
+      <section>
+        <h2>Wnioski</h2>
+        <ul>
+          <li><strong>Replay pomaga</strong> - OCGNN/Replay 0,69 vs Naive 0,55</li>
+          <li><strong>Dodanie krawędzi (V-features) polepsza wynik</strong> (np. 0,51 → 0,73 dla DOMINANT), ale niestety
+            znacząco zwiększa zapotrzebowanie pamięciowe</li>
+          <li><strong>Mało zapominania</strong> - BWT ≈ 0, więc continual learning nie psuje starej wiedzy</li>
+          <li>Modele DOMINANT cechują się <strong>najlepszymi wynikami</strong>, ale z racji, że konstruują gęste
+            macierze, są kosztowne
+            pamięciowo</li>
+          <li>Większość konfiguracji jest blisko losowego - zadanie jest trudne
+          </li>
+        </ul>
+      </section>
+
+      <!-- Slajd 18 - ograniczenia i dalsze prace -->
+      <section>
+        <h2>Ograniczenia i dalsze prace</h2>
+        <ul>
+          <li><strong>Zasoby:</strong> DOMINANT/Naive i /Cumulative do dokończenia na większej maszynie (OOM)</li>
+          <li><strong>EWC</strong> - planowane</li>
+          <li><strong>Tuning:</strong> więcej epok, większe bufory replay, V-features dla wszystkich modeli</li>
+          <li><strong>Więcej detektorów</strong> (np. AnomalyDAE) oraz bogatsze cechy i definicje krawędzi</li>
+        </ul>
+      </section>
+
+      <!-- Slajd 19 - podziękowanie -->
+      <section>
+        <h1>Dziękujemy</h1>
+        <p style="font-size:0.9em; color:#444;">Pytania?</p>
+        <p class="small" style="margin-top:1.5em;">Franciszek Job · Jakub Ciszewski · AGH · Semestr 8</p>
+      </section>
+
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
