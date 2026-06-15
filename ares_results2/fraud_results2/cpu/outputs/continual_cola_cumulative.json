@@ -1,0 +1,121 @@
+{
+    "model": {
+        "name": "PyGOD-CoLA",
+        "detector_params": {
+            "hid_dim": "64",
+            "num_layers": "2",
+            "epoch": "10",
+            "lr": "0.004",
+            "contamination": "0.035",
+            "batch_size": "1024",
+            "num_neigh": "4",
+            "gpu": "-1"
+        }
+    },
+    "dataset": {
+        "name": "ieee-cis-fraud-temporal",
+        "tran_concepts_no": 6,
+        "test_concepts_no": 6
+    },
+    "strategy": {
+        "name": "Cumulative",
+        "model": "PyGOD-CoLA",
+        "buffer_size": 399231
+    },
+    "concept_metric_callback_ROC-AUC": {
+        "base_metric_name": "ROC-AUC",
+        "metrics": {
+            "ContinualAverage": 0.4365708891624161,
+            "BackwardTransfer": -0.005132180725335048,
+            "ForwardTransfer": 0.4590913076777784
+        },
+        "concepts_order": [
+            "month_1",
+            "month_2",
+            "month_3",
+            "month_4",
+            "month_5",
+            "month_6"
+        ],
+        "metric_matrix": {
+            "month_1": {
+                "month_1": 0.44648217619133207,
+                "month_2": 0.4882915959437699,
+                "month_3": 0.489007471285632,
+                "month_4": 0.5188203246651959,
+                "month_5": 0.5097009628451461,
+                "month_6": 0.5208163379587138
+            },
+            "month_2": {
+                "month_1": 0.42077056564262927,
+                "month_2": 0.41824220742481616,
+                "month_3": 0.4071381897130414,
+                "month_4": 0.3896672170309101,
+                "month_5": 0.4201112198125769,
+                "month_6": 0.4468197412114765
+            },
+            "month_3": {
+                "month_1": 0.4920500593181746,
+                "month_2": 0.4753819906863386,
+                "month_3": 0.48799995771469046,
+                "month_4": 0.5076577776279918,
+                "month_5": 0.47482143907828717,
+                "month_6": 0.5068621550699393
+            },
+            "month_4": {
+                "month_1": 0.4150698870219076,
+                "month_2": 0.42053839926883396,
+                "month_3": 0.41913829806914704,
+                "month_4": 0.4003715828529328,
+                "month_5": 0.3988926779563977,
+                "month_6": 0.39197071071193457
+            },
+            "month_5": {
+                "month_1": 0.47805780163774375,
+                "month_2": 0.43763777690734207,
+                "month_3": 0.4404036793504977,
+                "month_4": 0.43802606336565436,
+                "month_5": 0.4281318238578565,
+                "month_6": 0.4157917942556623
+            },
+            "month_6": {
+                "month_1": 0.4223466156833433,
+                "month_2": 0.4363857422640031,
+                "month_3": 0.4040803837127559,
+                "month_4": 0.4170325902918969,
+                "month_5": 0.424399705209603,
+                "month_6": 0.445441365939239
+            }
+        }
+    },
+    "time_evaluation_callback": {
+        "time_by_concept": {
+            "month_1": {
+                "train_time": 9.627405405044556,
+                "eval_time": 1.3399198055267334
+            },
+            "month_2": {
+                "train_time": 15.290525436401367,
+                "eval_time": 0.8921937942504883
+            },
+            "month_3": {
+                "train_time": 20.128582239151,
+                "eval_time": 0.9457988739013672
+            },
+            "month_4": {
+                "train_time": 28.933368682861328,
+                "eval_time": 0.9633898735046387
+            },
+            "month_5": {
+                "train_time": 33.27557373046875,
+                "eval_time": 0.8307201862335205
+            },
+            "month_6": {
+                "train_time": 40.18659496307373,
+                "eval_time": 0.8580160140991211
+            }
+        },
+        "train_time_total": 147.44205045700073,
+        "eval_time_total": 5.830038547515869
+    }
+}

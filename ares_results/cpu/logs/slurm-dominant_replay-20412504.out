@@ -1,0 +1,44 @@
+ gcc/11.3.0 unloaded.
+ gcc/11.3.0 loaded.
+2026-06-11 21:32:04,578 INFO fraud_detection.run_experiment: Device: cpu
+2026-06-11 21:32:04,597 INFO fraud_detection.preprocessing: Reading data/train_transaction.csv (55 columns)
+2026-06-11 21:32:13,849 INFO fraud_detection.preprocessing: Prepared 590540 transactions, 52 features (3.5% fraud)
+2026-06-11 21:32:14,446 INFO fraud_detection.graph: Edge key card1+card2+card3+card4+card5+card6 -> 2741506 directed edges
+2026-06-11 21:32:14,760 INFO fraud_detection.graph: Edge key card1+addr1 -> 2253223 directed edges
+2026-06-11 21:32:15,057 INFO fraud_detection.graph: Edge key card1+P_emaildomain -> 2113273 directed edges
+/net/afscra/people/plgciszew/fraud-detection-fable/src/fraud_detection/graph.py:86: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:206.)
+  y=torch.from_numpy(prepared.labels),
+2026-06-11 21:32:15,672 INFO fraud_detection.graph: Global graph: 590540 nodes, 5227570 undirected edges, 3627 isolated nodes
+2026-06-11 21:32:15,679 INFO fraud_detection.concepts: month_1: 92194 train / 40567 test nodes (test fraud rate 2.49%)
+2026-06-11 21:32:15,680 INFO fraud_detection.concepts: month_2: 60523 train / 26985 test nodes (test fraud rate 4.11%)
+2026-06-11 21:32:15,681 INFO fraud_detection.concepts: month_3: 63577 train / 28428 test nodes (test fraud rate 3.90%)
+2026-06-11 21:32:15,682 INFO fraud_detection.concepts: month_4: 66381 train / 29492 test nodes (test fraud rate 4.86%)
+2026-06-11 21:32:15,683 INFO fraud_detection.concepts: month_5: 57370 train / 25482 test nodes (test fraud rate 3.03%)
+2026-06-11 21:32:15,684 INFO fraud_detection.concepts: month_6: 59186 train / 26212 test nodes (test fraud rate 4.14%)
+2026-06-11 21:32:15,684 INFO pyclad.scenarios.concept_aware: Starting training on concept month_1
+2026-06-11 21:32:15,703 INFO fraud_detection.adapter: [DOMINANT] fit on 92194 nodes / 1341973 edges
+2026-06-11 22:10:03,191 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 22:10:11,886 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 22:10:13,429 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 22:10:15,155 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 22:10:16,981 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 22:10:18,326 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 22:10:19,915 INFO pyclad.scenarios.concept_aware: Starting training on concept month_2
+2026-06-11 22:10:19,933 INFO fraud_detection.adapter: [DOMINANT] fit on 80523 nodes / 891693 edges
+2026-06-11 22:32:28,024 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 22:32:37,106 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 22:32:38,651 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 22:32:40,370 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 22:32:42,191 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 22:32:43,533 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 22:32:45,316 INFO pyclad.scenarios.concept_aware: Starting training on concept month_3
+2026-06-11 22:32:45,334 INFO fraud_detection.adapter: [DOMINANT] fit on 83577 nodes / 925785 edges
+2026-06-11 22:55:50,168 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-11 22:55:58,918 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-11 22:56:00,466 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-11 22:56:02,189 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-11 22:56:04,038 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-11 22:56:05,389 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-11 22:56:06,820 INFO pyclad.scenarios.concept_aware: Starting training on concept month_4
+2026-06-11 22:56:06,838 INFO fraud_detection.adapter: [DOMINANT] fit on 86379 nodes / 957113 edges
+slurmstepd: error: Detected 1 oom_kill event in StepId=20412504.batch. Some of the step tasks have been OOM Killed.

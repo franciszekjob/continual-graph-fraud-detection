@@ -1,0 +1,121 @@
+{
+    "model": {
+        "name": "PyGOD-OCGNN",
+        "detector_params": {
+            "hid_dim": "64",
+            "num_layers": "2",
+            "epoch": "30",
+            "lr": "0.004",
+            "contamination": "0.035",
+            "batch_size": "8192",
+            "num_neigh": "10",
+            "gpu": "-1"
+        }
+    },
+    "dataset": {
+        "name": "ieee-cis-fraud-temporal",
+        "tran_concepts_no": 6,
+        "test_concepts_no": 6
+    },
+    "strategy": {
+        "name": "Cumulative",
+        "model": "PyGOD-OCGNN",
+        "buffer_size": 399231
+    },
+    "concept_metric_callback_ROC-AUC": {
+        "base_metric_name": "ROC-AUC",
+        "metrics": {
+            "ContinualAverage": 0.5744851354634344,
+            "BackwardTransfer": 0.026625028575929282,
+            "ForwardTransfer": 0.5630659361120949
+        },
+        "concepts_order": [
+            "month_1",
+            "month_2",
+            "month_3",
+            "month_4",
+            "month_5",
+            "month_6"
+        ],
+        "metric_matrix": {
+            "month_1": {
+                "month_1": 0.44376385995329565,
+                "month_2": 0.5643821038429734,
+                "month_3": 0.49460218112912346,
+                "month_4": 0.41022168365528544,
+                "month_5": 0.5022462257733117,
+                "month_6": 0.4732866793350464
+            },
+            "month_2": {
+                "month_1": 0.5683593701161027,
+                "month_2": 0.5798097401749576,
+                "month_3": 0.5951424089940853,
+                "month_4": 0.5857897413735426,
+                "month_5": 0.5851022253042841,
+                "month_6": 0.5964773636635629
+            },
+            "month_3": {
+                "month_1": 0.5361524794656893,
+                "month_2": 0.6021590111850982,
+                "month_3": 0.5789826815229054,
+                "month_4": 0.628068186212799,
+                "month_5": 0.5749741722483112,
+                "month_6": 0.6190186176220651
+            },
+            "month_4": {
+                "month_1": 0.48497615070307115,
+                "month_2": 0.5367385994690342,
+                "month_3": 0.6090404835589431,
+                "month_4": 0.5907227388017628,
+                "month_5": 0.5991488061130639,
+                "month_6": 0.6277022737264225
+            },
+            "month_5": {
+                "month_1": 0.48127275317848095,
+                "month_2": 0.5278993080036558,
+                "month_3": 0.5548244399839316,
+                "month_4": 0.5949442318775225,
+                "month_5": 0.5466410118610567,
+                "month_6": 0.5898263726875479
+            },
+            "month_6": {
+                "month_1": 0.5614497229834746,
+                "month_2": 0.6088086869478174,
+                "month_3": 0.6424410714568876,
+                "month_4": 0.6857491127414591,
+                "month_5": 0.6408468668232787,
+                "month_6": 0.6886055239236971
+            }
+        }
+    },
+    "time_evaluation_callback": {
+        "time_by_concept": {
+            "month_1": {
+                "train_time": 28.220935583114624,
+                "eval_time": 1.181711196899414
+            },
+            "month_2": {
+                "train_time": 51.25585913658142,
+                "eval_time": 0.7183620929718018
+            },
+            "month_3": {
+                "train_time": 77.60500121116638,
+                "eval_time": 0.7508313655853271
+            },
+            "month_4": {
+                "train_time": 109.69291853904724,
+                "eval_time": 0.762399435043335
+            },
+            "month_5": {
+                "train_time": 132.54632234573364,
+                "eval_time": 0.637338399887085
+            },
+            "month_6": {
+                "train_time": 161.1343367099762,
+                "eval_time": 0.6705594062805176
+            }
+        },
+        "train_time_total": 560.4553735256195,
+        "eval_time_total": 4.7212018966674805
+    }
+}

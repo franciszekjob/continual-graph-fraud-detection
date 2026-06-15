@@ -1,0 +1,133 @@
+ gcccore/11.3.0 loaded.
+ zlib/1.2.12-gcccore-11.3.0 loaded.
+ binutils/2.38-gcccore-11.3.0 loaded.
+ gcc/11.3.0 loaded.
+2026-06-12 20:45:28,457 INFO fraud_detection.run_experiment: Device: cpu
+2026-06-12 20:45:28,518 INFO fraud_detection.preprocessing: Reading data/train_transaction.csv (55 columns)
+2026-06-12 20:45:37,755 INFO fraud_detection.preprocessing: Prepared 590540 transactions, 52 features (3.5% fraud)
+2026-06-12 20:45:38,354 INFO fraud_detection.graph: Edge key card1+card2+card3+card4+card5+card6 -> 2741506 directed edges
+2026-06-12 20:45:38,663 INFO fraud_detection.graph: Edge key card1+addr1 -> 2253223 directed edges
+2026-06-12 20:45:38,956 INFO fraud_detection.graph: Edge key card1+P_emaildomain -> 2113273 directed edges
+/net/afscra/people/plgciszew/fraud-detection-fable/src/fraud_detection/graph.py:86: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:206.)
+  y=torch.from_numpy(prepared.labels),
+2026-06-12 20:45:39,553 INFO fraud_detection.graph: Global graph: 590540 nodes, 5227570 undirected edges, 3627 isolated nodes
+2026-06-12 20:45:39,561 INFO fraud_detection.concepts: month_1: 92194 train / 40567 test nodes (test fraud rate 2.49%)
+2026-06-12 20:45:39,562 INFO fraud_detection.concepts: month_2: 60523 train / 26985 test nodes (test fraud rate 4.11%)
+2026-06-12 20:45:39,563 INFO fraud_detection.concepts: month_3: 63577 train / 28428 test nodes (test fraud rate 3.90%)
+2026-06-12 20:45:39,564 INFO fraud_detection.concepts: month_4: 66381 train / 29492 test nodes (test fraud rate 4.86%)
+2026-06-12 20:45:39,565 INFO fraud_detection.concepts: month_5: 57370 train / 25482 test nodes (test fraud rate 3.03%)
+2026-06-12 20:45:39,566 INFO fraud_detection.concepts: month_6: 59186 train / 26212 test nodes (test fraud rate 4.14%)
+2026-06-12 20:45:39,566 INFO pyclad.scenarios.concept_aware: Starting training on concept month_1
+2026-06-12 20:45:39,718 INFO fraud_detection.adapter: [DOMINANT] fit on 92194 nodes / 1341973 edges
+2026-06-12 22:55:06,970 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-12 22:55:46,959 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-12 22:55:47,967 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-12 22:55:49,168 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-12 22:55:52,003 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-12 22:55:54,520 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-12 22:55:56,958 INFO pyclad.scenarios.concept_aware: Starting training on concept month_2
+2026-06-12 22:55:56,972 INFO fraud_detection.adapter: [DOMINANT] fit on 80523 nodes / 890926 edges
+2026-06-13 00:03:24,875 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-13 00:03:34,137 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-13 00:03:36,610 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-13 00:03:39,559 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-13 00:03:44,241 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-13 00:03:45,408 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-13 00:03:47,513 INFO pyclad.scenarios.concept_aware: Starting training on concept month_3
+2026-06-13 00:03:47,666 INFO fraud_detection.adapter: [DOMINANT] fit on 83577 nodes / 925183 edges
+2026-06-13 00:59:26,850 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-13 01:00:08,979 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-13 01:00:10,084 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-13 01:00:12,000 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-13 01:00:14,755 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-13 01:00:19,068 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-13 01:00:23,554 INFO pyclad.scenarios.concept_aware: Starting training on concept month_4
+2026-06-13 01:00:23,713 INFO fraud_detection.adapter: [DOMINANT] fit on 86379 nodes / 957241 edges
+2026-06-13 02:00:59,811 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-13 02:01:10,940 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-13 02:01:11,961 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-13 02:01:13,057 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-13 02:01:15,024 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-13 02:01:19,232 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-13 02:01:21,383 INFO pyclad.scenarios.concept_aware: Starting training on concept month_5
+2026-06-13 02:01:21,397 INFO fraud_detection.adapter: [DOMINANT] fit on 77370 nodes / 813399 edges
+2026-06-13 02:38:02,951 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-13 02:38:15,233 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-13 02:38:19,722 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-13 02:38:24,427 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-13 02:38:29,731 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-13 02:38:34,712 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-13 02:38:40,518 INFO pyclad.scenarios.concept_aware: Starting training on concept month_6
+2026-06-13 02:38:40,671 INFO fraud_detection.adapter: [DOMINANT] fit on 79186 nodes / 829190 edges
+2026-06-13 03:30:54,114 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-13 03:31:20,468 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-13 03:31:22,999 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-13 03:31:25,729 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-13 03:31:28,884 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-13 03:31:33,862 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-13 03:31:38,524 INFO fraud_detection.run_experiment: Continual results written to outputs/continual_dominant_replay.json
+{
+  "metric_matrix": {
+    "month_1": {
+      "month_1": 0.5641129894949668,
+      "month_2": 0.5342534360447404,
+      "month_3": 0.47289354739390355,
+      "month_4": 0.4764334175084426,
+      "month_5": 0.46815186145880094,
+      "month_6": 0.4178028922078031
+    },
+    "month_2": {
+      "month_1": 0.4881014073225664,
+      "month_2": 0.5261865343604474,
+      "month_3": 0.46805171427287773,
+      "month_4": 0.4876750992887517,
+      "month_5": 0.4886781990996202,
+      "month_6": 0.4429310895554179
+    },
+    "month_3": {
+      "month_1": 0.47759119800507693,
+      "month_2": 0.5466692953823389,
+      "month_3": 0.5042886553800128,
+      "month_4": 0.589931217393578,
+      "month_5": 0.5896656398550906,
+      "month_6": 0.5504300498599398
+    },
+    "month_4": {
+      "month_1": 0.5345896198545697,
+      "month_2": 0.5273276232754494,
+      "month_3": 0.48013247855341956,
+      "month_4": 0.5026354180864443,
+      "month_5": 0.501049092489726,
+      "month_6": 0.4760168969388756
+    },
+    "month_5": {
+      "month_1": 0.5357754207209421,
+      "month_2": 0.5303223397310354,
+      "month_3": 0.4818607584398835,
+      "month_4": 0.5011981308294146,
+      "month_5": 0.5029169626301577,
+      "month_6": 0.4769339691857275
+    },
+    "month_6": {
+      "month_1": 0.4852838815500922,
+      "month_2": 0.43351471471471476,
+      "month_3": 0.44699006229154664,
+      "month_4": 0.4857032051459852,
+      "month_5": 0.4946388552575686,
+      "month_6": 0.46805930522688677
+    }
+  },
+  "summary": {
+    "ContinualAverage": 0.5008523264882628,
+    "BackwardTransfer": -0.01693398939947477,
+    "ForwardTransfer": 0.4960598748368864
+  },
+  "order": [
+    "month_1",
+    "month_2",
+    "month_3",
+    "month_4",
+    "month_5",
+    "month_6"
+  ]
+}

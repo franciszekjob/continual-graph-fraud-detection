@@ -1,0 +1,37 @@
+[project]
+name = "fraud-detection-cad"
+version = "0.1.0"
+description = "Continual graph anomaly detection on the IEEE-CIS fraud dataset (PyGOD + pyCLAD)"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "scikit-learn>=1.4",
+    "torch>=2.2",
+    "torch-geometric>=2.5",
+    "pygod>=1.1",
+    "pyclad>=0.3.0",
+    "seaborn>=0.13.2",
+]
+
+[project.scripts]
+fraud-detection = "fraud_detection.run_experiment:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fraud_detection"]
+
+# CUDA wheels for the GPU cluster (Linux). On macOS/Windows uv falls back to the
+# default PyPI CPU build, so local development still works out of the box.
+# Adjust cu124 -> cu121/cu126 to match the cluster's driver if needed.
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu124", marker = "sys_platform == 'linux'" }]

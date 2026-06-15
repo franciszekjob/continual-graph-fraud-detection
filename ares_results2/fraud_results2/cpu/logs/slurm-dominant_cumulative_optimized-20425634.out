@@ -1,0 +1,68 @@
+ gcccore/11.3.0 loaded.
+ zlib/1.2.12-gcccore-11.3.0 loaded.
+ binutils/2.38-gcccore-11.3.0 loaded.
+ gcc/11.3.0 loaded.
+2026-06-12 22:46:05,803 INFO fraud_detection.run_experiment: Device: cpu
+2026-06-12 22:46:05,803 INFO fraud_detection.run_experiment: Threads: 32
+2026-06-12 22:46:05,804 INFO fraud_detection.run_experiment: Threads inter-op: 48
+2026-06-12 22:46:05,855 INFO fraud_detection.preprocessing: Reading data/train_transaction.csv (55 columns)
+2026-06-12 22:46:15,122 INFO fraud_detection.preprocessing: Prepared 590540 transactions, 52 features (3.5% fraud)
+2026-06-12 22:46:15,691 INFO fraud_detection.graph: Edge key card1+card2+card3+card4+card5+card6 -> 1121408 directed edges
+2026-06-12 22:46:15,983 INFO fraud_detection.graph: Edge key card1+addr1 -> 951893 directed edges
+2026-06-12 22:46:16,252 INFO fraud_detection.graph: Edge key card1+P_emaildomain -> 893508 directed edges
+/net/afscra/people/plgciszew/fraud-detection-fable/src/fraud_detection/graph.py:86: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /pytorch/torch/csrc/utils/tensor_numpy.cpp:206.)
+  y=torch.from_numpy(prepared.labels),
+2026-06-12 22:46:17,193 INFO fraud_detection.graph: Global graph: 590540 nodes, 2147954 undirected edges, 3627 isolated nodes
+2026-06-12 22:46:17,200 INFO fraud_detection.concepts: month_1: 92194 train / 40567 test nodes (test fraud rate 2.49%)
+2026-06-12 22:46:17,201 INFO fraud_detection.concepts: month_2: 60523 train / 26985 test nodes (test fraud rate 4.11%)
+2026-06-12 22:46:17,202 INFO fraud_detection.concepts: month_3: 63577 train / 28428 test nodes (test fraud rate 3.90%)
+2026-06-12 22:46:17,203 INFO fraud_detection.concepts: month_4: 66381 train / 29492 test nodes (test fraud rate 4.86%)
+2026-06-12 22:46:17,204 INFO fraud_detection.concepts: month_5: 57370 train / 25482 test nodes (test fraud rate 3.03%)
+2026-06-12 22:46:17,205 INFO fraud_detection.concepts: month_6: 59186 train / 26212 test nodes (test fraud rate 4.14%)
+2026-06-12 22:46:17,205 INFO pyclad.scenarios.concept_aware: Starting training on concept month_1
+2026-06-12 22:46:17,336 INFO fraud_detection.adapter: [DOMINANT] fit on 92194 nodes / 589393 edges
+2026-06-12 23:33:04,444 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-12 23:33:23,114 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-12 23:33:34,204 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-12 23:33:50,474 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-12 23:34:01,852 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-12 23:34:16,312 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-12 23:34:27,617 INFO pyclad.scenarios.concept_aware: Starting training on concept month_2
+2026-06-12 23:34:27,764 INFO fraud_detection.adapter: [DOMINANT] fit on 152717 nodes / 972462 edges
+2026-06-13 01:21:05,863 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_1
+2026-06-13 01:21:21,374 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_2
+2026-06-13 01:21:24,240 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_3
+2026-06-13 01:21:40,508 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_4
+2026-06-13 01:21:56,784 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_5
+2026-06-13 01:22:07,673 INFO pyclad.scenarios.concept_aware: Starting evaluation of concept month_6
+2026-06-13 01:22:11,941 INFO pyclad.scenarios.concept_aware: Starting training on concept month_3
+2026-06-13 01:22:11,955 INFO fraud_detection.adapter: [DOMINANT] fit on 216294 nodes / 1388026 edges
+Traceback (most recent call last):
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/.venv/bin/fraud-detection", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/src/fraud_detection/run_experiment.py", line 221, in main
+    continual_info = run_continual(
+                     ^^^^^^^^^^^^^^
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/src/fraud_detection/run_experiment.py", line 87, in run_continual
+    ConceptAwareScenario(dataset, strategy=strategy, callbacks=callbacks).run()
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/.venv/lib/python3.12/site-packages/pyclad/scenarios/concept_aware.py", line 27, in run
+    self._strategy.learn(data=train_concept.data, concept_id=train_concept.name)
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/.venv/lib/python3.12/site-packages/pyclad/strategies/baselines/cumulative.py", line 21, in learn
+    self._model.fit(np.concatenate(self._replay))
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/src/fraud_detection/adapter.py", line 100, in fit
+    self._detector.fit(subgraph)
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/.venv/lib/python3.12/site-packages/pygod/detector/base.py", line 431, in fit
+    self.process_graph(data)
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/.venv/lib/python3.12/site-packages/pygod/detector/dominant.py", line 139, in process_graph
+    DOMINANTBase.process_graph(data)
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/.venv/lib/python3.12/site-packages/pygod/nn/dominant.py", line 132, in process_graph
+    data.s = to_dense_adj(data.edge_index)[0]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/.venv/lib/python3.12/site-packages/torch_geometric/utils/_to_dense_adj.py", line 97, in to_dense_adj
+    adj = scatter(edge_attr, idx, dim=0, dim_size=flattened_size, reduce='sum')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/net/afscra/people/plgciszew/fraud-detection-fable/.venv/lib/python3.12/site-packages/torch_geometric/utils/_scatter.py", line 70, in scatter
+    return src.new_zeros(size).scatter_add_(dim, index, src)
+           ^^^^^^^^^^^^^^^^^^^
+RuntimeError: [enforce fail at alloc_cpu.cpp:124] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 187132377744 bytes. Error code 12 (Cannot allocate memory)

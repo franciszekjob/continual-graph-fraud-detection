@@ -1,0 +1,119 @@
+{
+    "model": {
+        "name": "PyGOD-OCGNN",
+        "detector_params": {
+            "hid_dim": "64",
+            "num_layers": "2",
+            "epoch": "30",
+            "lr": "0.004",
+            "contamination": "0.035",
+            "batch_size": "8192",
+            "num_neigh": "10",
+            "gpu": "-1"
+        }
+    },
+    "dataset": {
+        "name": "ieee-cis-fraud-temporal",
+        "tran_concepts_no": 6,
+        "test_concepts_no": 6
+    },
+    "strategy": {
+        "name": "Naive"
+    },
+    "concept_metric_callback_ROC-AUC": {
+        "base_metric_name": "ROC-AUC",
+        "metrics": {
+            "ContinualAverage": 0.5383803849354104,
+            "BackwardTransfer": -0.01037657155520092,
+            "ForwardTransfer": 0.5607429772074907
+        },
+        "concepts_order": [
+            "month_1",
+            "month_2",
+            "month_3",
+            "month_4",
+            "month_5",
+            "month_6"
+        ],
+        "metric_matrix": {
+            "month_1": {
+                "month_1": 0.5803838907621383,
+                "month_2": 0.5819131305218262,
+                "month_3": 0.6048848947624359,
+                "month_4": 0.5726676401433055,
+                "month_5": 0.5672560795008194,
+                "month_6": 0.5733866506179024
+            },
+            "month_2": {
+                "month_1": 0.5345797676663987,
+                "month_2": 0.5792776776776776,
+                "month_3": 0.5559784985807993,
+                "month_4": 0.5178116425101899,
+                "month_5": 0.5472852950536214,
+                "month_6": 0.549784720368459
+            },
+            "month_3": {
+                "month_1": 0.4664081017393963,
+                "month_2": 0.5107222004613309,
+                "month_3": 0.5100602202271779,
+                "month_4": 0.5504660822625538,
+                "month_5": 0.5473753109945785,
+                "month_6": 0.5682233916750187
+            },
+            "month_4": {
+                "month_1": 0.40038068705059393,
+                "month_2": 0.4837008138573356,
+                "month_3": 0.4533077022691354,
+                "month_4": 0.458119378736594,
+                "month_5": 0.5217644898502697,
+                "month_6": 0.5153688210681517
+            },
+            "month_5": {
+                "month_1": 0.6158707098846654,
+                "month_2": 0.6290033859946904,
+                "month_3": 0.6240759338446331,
+                "month_4": 0.6580325417771297,
+                "month_5": 0.6345438089214037,
+                "month_6": 0.6369780102024287
+            },
+            "month_6": {
+                "month_1": 0.46209354347600606,
+                "month_2": 0.5124151281716499,
+                "month_3": 0.5378100372110723,
+                "month_4": 0.5328436150341299,
+                "month_5": 0.5615740791041194,
+                "month_6": 0.5607848597763405
+            }
+        }
+    },
+    "time_evaluation_callback": {
+        "time_by_concept": {
+            "month_1": {
+                "train_time": 27.90689468383789,
+                "eval_time": 1.1635239124298096
+            },
+            "month_2": {
+                "train_time": 14.832784175872803,
+                "eval_time": 0.7555763721466064
+            },
+            "month_3": {
+                "train_time": 16.032830953598022,
+                "eval_time": 0.7520973682403564
+            },
+            "month_4": {
+                "train_time": 17.612322568893433,
+                "eval_time": 0.7707619667053223
+            },
+            "month_5": {
+                "train_time": 13.963281393051147,
+                "eval_time": 0.6424005031585693
+            },
+            "month_6": {
+                "train_time": 14.699879169464111,
+                "eval_time": 0.6711082458496094
+            }
+        },
+        "train_time_total": 105.04799294471741,
+        "eval_time_total": 4.755468368530273
+    }
+}
